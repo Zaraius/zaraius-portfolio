@@ -25,7 +25,7 @@
   </header> 
   <main class="page">
     <section class="detail-hero">
-      <p class="eyebrow">R&D Intern • Summer 2026</p>
+      <p class="eyebrow">R&D Intern, Summer 2026</p>
       <h1>HITT Contracting</h1>
       <p class="lead">I developed and deployed a human-aware social navigation layer for Boston Dynamics Spot, integrating real-time human tracking with motion planning to dynamically adjust trajectories around moving pedestrians.</p>
       <figure class="media-figure">
@@ -44,9 +44,6 @@
       <!-- <p>I built the social navigation system as an add-on to Spot's existing navigation stack rather than a replacement for it. The idea was to keep the strong base navigation behavior and layer in a new sense of human-aware cost so the robot could adjust trajectories around people instead of treating them as static obstacles alone.</p> -->
       <!-- <p>That meant combining perception, tracking, and motion planning into one pipeline: the robot had to detect people, estimate how they were moving, and then change its own planned trajectory before a conflict became unavoidable.</p> -->
     <!-- </section> -->
-<!-- TODO add a system diagram -->
-
-
     <!-- <section class="story-section">
       <h2>The ZED and the skeleton tracking layer</h2>
       <p>The first step was getting reliable human detections from the ZED 2i. The camera provided body tracking, skeletons, and bounding boxes that let the system estimate where people were in the scene and how their body posture might influence the robot's behavior.</p>
@@ -121,7 +118,7 @@
     <section class="story-section">
       <h2>Challenges and next steps</h2>
       <p>While the deployment successfully demonstrated proactive yielding, a real-world system can fail for reasons that seem small until they are suddenly very important. Working on the physical robot highlighted that the sensor stack has inherent blind spots and that manual parameter tuning for every edge-case scenario is not scalable.</p>
-      <p>Future iterations should focus on two-way human-robot communication so the robot can signal intent as clearly as it tries to infer it. Additionally, implementing more nuanced pedestrian modeling—such as identifying if someone is moving through a constrained space—would allow the clearance strategy to dynamically adapt, making the system feel human-aware in a much deeper way.</p>
+      <p>Future iterations should focus on two-way human-robot communication so the robot can signal intent as clearly as it tries to infer it. Additionally, implementing more nuanced pedestrian modeling, such as identifying if someone is moving through a constrained space, would allow the clearance strategy to dynamically adapt, making the system feel human-aware in a much deeper way.</p>
     </section>
 
     <footer class="footer"> <a href="index.html">Back to home</a>.</footer>
