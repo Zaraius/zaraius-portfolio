@@ -23,10 +23,10 @@ body {
 }
 a { color: inherit; text-decoration: none; }
 img { max-width: 100%; display: block; }
-.media-raw-link { display: block; cursor: zoom-in; }
+.media-raw-link,
 .media-raw-link img,
 .media-raw-link video,
-video.media-raw-link { cursor: inherit; }
+video.media-raw-link { display: block; cursor: default; }
 .page { width: 100%; max-width: 1180px; margin: 0 auto; padding: 94px 24px 48px; }
 .header { position: sticky; top: 0; z-index: 10; background: rgba(255, 255, 255, 0.96); border-bottom: 1px solid var(--border); }
 .navbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 0; }

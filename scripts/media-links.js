@@ -59,7 +59,6 @@
 
     const absoluteUrl = toAbsoluteUrl(rawUrl);
     media.draggable = true;
-    media.title = media.title || "Open raw media in a new tab";
     media.addEventListener("dragstart", (event) => setDragData(event, absoluteUrl));
 
     if (media instanceof HTMLVideoElement) {
