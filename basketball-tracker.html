@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Basketball Tracker — 3D trajectory from video</title>
+  <link rel="stylesheet" href="style.css">
+<script src="https://cdn.tailwindcss.com"></script>
+  <script src="scripts/media-links.js" defer></script>
+</head>
+<body class="bg-slate-50 text-slate-950">
+  <header class="header">
+    <nav class="navbar page">
+      <a class="brand" href="index.html">Zaraius</a>
+      <div class="nav-links space-x-4">
+        <a href="index.html">Home</a>
+        <a href="index.html#work-experience">Work Experience</a>
+        <a href="index.html#project-teams">Project Teams</a>
+        <a href="index.html#projects">Projects</a>
+        <a href="resume.html">Resume</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="detail-hero">
+      <h1>Basketball Tracker</h1>
+      <p class="lead">Computer vision pipeline to detect a basketball in monocular iPhone video, estimate depth from apparent diameter, and compute 3D trajectory & kinematics.</p>
+
+      <figure class="media-figure mt-4">
+        <img src="https://raw.githubusercontent.com/Zaraius/basketball-tracker/main/final_overlay.gif" alt="Basketball tracking overlay" />
+        <figcaption class="text-xs text-slate-600">Final overlay: detection, depth estimate, and trajectory visualization (from repository)</figcaption>
+      </figure>
+
+      <p class="mt-4 text-slate-700">Role: designed the detection-to-geometry pipeline, trained/refined the YOLO detector, implemented Hough-circle refinement, depth calibration, and trajectory/kinematics estimation.</p>
+    </section>
+
+    <section class="story-section">
+      <h2>Overview</h2>
+      <p>Recovered approximate 3D position, velocity, and acceleration from monocular iPhone footage by combining object detection (YOLO) with geometric refinement (Hough Circle) and a pixel-diameter → depth calibration curve. The goal was projective recovery of ball kinematics to assess shot trajectories.</p>
+    </section>
+
+    <section class="story-section">
+      <h2>Detection & geometric refinement</h2>
+      <ul>
+        <li>Started with HSV/color segmentation — failed due to lighting/scene variation.</li>
+        <li>Trained a <strong>YOLOv11n</strong> detector on basketball images; iteratively generated and corrected frames to improve performance on distant and partially occluded balls.</li>
+        <li>Used Hough Circle Transform to refine center & diameter estimates because bounding boxes alone were too loose for geometric depth estimation.</li>
+      </ul>
+    </section>
+
+    <section class="story-section">
+      <h2>Depth calibration & 3D pipeline</h2>
+      <p>ArUco tags were attempted and proved unreliable; the final approach used the apparent basketball diameter in pixels with a calibration curve (measured at known distances) to estimate depth (z). Combined with YOLO/Hough x,y, this produced per-frame x,y,z positions which were converted to trajectories, velocities, and accelerations.</p>
+    </section>
+
+    <section class="story-section">
+      <h2>Kinematics & visualization</h2>
+      <p>From the 3D positions we computed displacement, velocity, and acceleration and rendered overlays and 3D trajectory visualizations. Results are noisy due to monocular depth limits and frame-by-frame detection noise; visual overlays remain the most reliable artifact.</p>
+    </section>
+
+    <section class="story-section">
+      <h2>Failure modes & lessons</h2>
+      <ul>
+        <li>Multiple balls in-frame confused the tracker; manual cleaning was sometimes required.</li>
+        <li>Monocular depth estimation based on apparent diameter is limited (calibration accurate to ~12 ft); far-field shots exceed reliable calibration range.</li>
+        <li>Frame-to-frame depth noise leads to noisy velocity/acceleration estimates; claims of physical accuracy are limited.</li>
+        <li>YOLO bounding boxes improve localization but need geometric refinement for quantitative metrics.</li>
+      </ul>
+    </section>
+
+    <section class="story-section">
+      <h2>Pipeline diagram</h2>
+      <pre class="bg-slate-50 p-3 rounded text-sm">video → YOLO detection → Hough Circle refinement → pixel-diameter → depth calibration → 3D position → trajectory → kinematics</pre>
+    </section>
+
+    <section class="story-section">
+      <h2>Results & artifacts</h2>
+      <ul>
+        <li>Final overlay and 3D visualization available in repository media (<code>final_overlay.gif</code>, <code>overlay_3d.mp4</code>).</li>
+        <li>Approach successfully produces visually informative overlays and approximate kinematics; not yet reliable for accurate shot detection without higher-fidelity sensors or multi-camera setups.</li>
+      </ul>
+      <div class="mt-4">
+        <a class="inline-block bg-indigo-600 text-white px-4 py-2 rounded mr-3" href="https://github.com/Zaraius/basketball-tracker" target="_blank" rel="noopener">Repository</a>
+      </div>
+    </section>
+
+    <footer class="footer"> <a href="index.html">Back to home</a>.</footer>
+  </main>
+</body>
+</html>

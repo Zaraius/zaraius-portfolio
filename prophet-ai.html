@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prophet AI</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="scripts/autoplay-on-scroll.js" defer></script>
+  <script src="scripts/media-links.js" defer></script>
+</head>
+<body class="bg-slate-50 text-slate-950">
+  <header class="header">
+    <nav class="navbar page">
+      <a class="brand" href="index.html">Zaraius</a>
+      <div class="nav-links space-x-4">
+        <a href="index.html">Home</a>
+        <a href="index.html#work-experience">Work Experience</a>
+        <a href="index.html#project-teams">Project Teams</a>
+        <a href="index.html#projects">Projects</a>
+        <a href="resume.html">Resume</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </nav>
+  </header>
+  <main class="page">
+    <section class="detail-hero">
+      <p class="eyebrow">Computer Vision and Embedded Systems Intern • Summer 2025</p>
+      <h1>Prophet AI</h1>
+      <p class="lead">I was Prophet AI's first employee and helped turn an idea into a reality. I started by allowing the prototype to scale up from 100 bird facilities to 1000 bird facilities, reduced compute cost and increase accuracy. We monitored poultry health by installing cameras into farms and detecting and tracking a chicken's activity levels using our custom chicken detector and kalman-filter powered tracker. A chickens health is directly correlated to its activity levels, so we were able to detect sick chickens earlier at scales farmers aren't able to. </p>
+    </section>
+
+    <section class="story-section">
+      <h2>Shrinking compute with pixel differencing</h2>
+      <p>Running inference on every single frame wastes compute because chickens are mainly static. I implemented a pixel-differencing pre-filter that isolates moving regions and only sends those crops to the detector. This reduced the number of frames requiring detection by about 75%, lowering CPU and bandwidth usage and making edge deployments practical.</p>
+      <figure class="media-figure">
+        <video class="media-video" muted loop playsinline preload="metadata" data-autoplay-on-scroll>
+          <source src="media/frame_differencing-h264.mp4" type="video/mp4">
+          Your browser does not support video playback.
+        </video>
+        <figcaption>Regions with movement are fully captured while those with no movement are blacked out(blurred here for illustration purposes).</figcaption>
+      </figure>
+    </section>
+
+    <section class="story-section">
+      <h2>From hardware to deployment</h2>
+      <p>Instead of relying on expensive IP cameras, I prototyped a system using Raspberry Pi 4s with USB cameras and custom 3D-printed mounts. This reduced per-unit cost and made installations repeatable. We intentionally avoided features we didn't need to favor stable, consistent viewpoints across many fixtures.</p>
+      <div class="media-pair">
+        <div class="pair-item"><img src="media/camera_system.png" alt="Camera mount"><div class="pair-caption">Raspberry Pi and Camera setup</div></div>
+        <div class="pair-item"><img class="cad-mount-image" src="media/camera_cad_model.png" alt="CAD view"><div class="pair-caption">CAD of camera mount</div></div>
+      </div>
+    </section>
+
+
+
+    <section class="story-section">
+      <h2>Improving labels with dynamic masking</h2>
+      <p>Partial objects at the frame edges caused inconsistent annotations. To reduce incorrect labels, I introduced a dynamic mask per camera which defines which area is owned by a camera and ignores ambiguous edge detections. Cleaner training data improved the F1 score from 0.94 to 0.98.</p>
+      <div class="media-pair">
+        <div class="pair-item"><img src="media/unmasked_chicken.png" alt="Original frame"><div class="pair-caption">Original image</div></div>
+        <div class="pair-item"><img src="media/masked_chicken.png" alt="Masked frame"><div class="pair-caption">Masked image</div></div>
+      </div>
+    </section>
+
+    <section class="story-section">
+      <h2>Synthetic data and simulation</h2>
+      <p>To generate more training data and capture rare or difficult scenarios without more physical cameras, I wrote a pipeline to project 2D annotations into a 3D Unity scene and render synthetic frames. This allowed us to recreate our real data in Unity as a digital-twin, generate new scenarios with different lighting, density, and occlusion, and improve our model's robustness.</p>
+      <div class="media-pair">
+        <div class="pair-item"><img src="media/real_chicken.png" alt="Real frame"><div class="pair-caption">Real frame</div></div>
+        <div class="pair-item"><img src="media/simulation_chicken.png" alt="Simulation frame"><div class="pair-caption">Unity simulation</div></div>
+      </div>
+    </section>
+<!-- 
+    <section class="story-section">
+      <h2>Impact</h2>
+      <p>Combining inexpensive, repeatable hardware with computational pre-filters and cleaner labels produced a deployable system: lower compute and bandwidth costs, improved model accuracy, and a data pipeline that can be extended with synthetic examples to cover edge cases.</p>
+    </section> -->
+
+
+    <footer class="footer"> <a href="index.html">Back to home</a></footer>
+  </main>
+</body>
+</html>

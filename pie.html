@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project AURA — Autonomous Assistive Cart</title>
+  <link rel="stylesheet" href="style.css">
+<script src="https://cdn.tailwindcss.com"></script>
+  <script src="scripts/media-links.js" defer></script>
+</head>
+<body class="bg-slate-50 text-slate-950">
+  <header class="header">
+    <nav class="navbar page">
+      <a class="brand" href="index.html">Zaraius</a>
+      <div class="nav-links space-x-4">
+        <a href="index.html">Home</a>
+        <a href="index.html#work-experience">Work Experience</a>
+        <a href="index.html#project-teams">Project Teams</a>
+        <a href="index.html#projects">Projects</a>
+        <a href="resume.html">Resume</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="detail-hero">
+      <!-- PROJECT VIDEO PLACEHOLDER -->
+      <div class="media-figure bg-slate-100 rounded mb-4 flex items-center justify-center" style="height:360px;">
+        <span class="text-slate-500">[PROJECT VIDEO PLACEHOLDER]</span>
+      </div>
+
+      <h1>Project AURA</h1>
+      <p class="lead">ROS 2 Autonomous Assistive Cart</p>
+      <p class="mt-3 text-slate-700">Developed the software architecture and robotics systems for an autonomous assistive cart at Olin College. This was a team project; my primary contributions were software and robotics systems integration including ROS 2 architecture, motor/encoder control, depth perception, and autonomous/manual behavior integration.</p>
+    </section>
+
+    <section class="story-section">
+      <h2>My contributions</h2>
+      <h3 class="mt-3">ROS 2 architecture</h3>
+      <ul>
+        <li>Architected the ROS 2 software system: modular nodes for sensors, motor control, perception, user input, and autonomous behaviors.</li>
+        <li>Defined topics and interfaces to decouple subsystems so components could be developed and tested independently.</li>
+        <li>Ensured the same hardware and software stacks supported both manual teleoperation and autonomous modes running on a Raspberry Pi.</li>
+        <li>Focused the design on modularity and extensibility so new behaviors could be added without a full redesign.</li>
+      </ul>
+    </section>
+
+    <section class="story-section">
+      <h2>Motor & encoder control</h2>
+      <ul>
+        <li>Implemented the ROS 2↔motor-controller interface and drivetrain command layer used by both manual and autonomous code.</li>
+        <li>Integrated wheel encoder feedback into ROS 2 and converted encoder ticks into odometry and motion estimates.</li>
+        <li>Monitored encoder feedback to validate motion and detect discrepancies between commanded and actual wheel motion.</li>
+        <li>Exposed the drivetrain control through a single ROS 2 interface so higher-level behaviors issue motion commands without hardware coupling.</li>
+      </ul>
+    </section>
+
+    <section class="story-section">
+      <h2>Depth camera / perception</h2>
+      <ul>
+        <li>Integrated an Intel RealSense depth camera into the ROS 2 perception pipeline as the primary front-facing depth sensor.</li>
+        <li>Streamed depth and RGB topics into ROS 2, used depth information for obstacle awareness and short-range human following.</li>
+        <li>Preferred RealSense over LiDAR for practical USB connectivity and existing ROS 2 drivers during hardware development.</li>
+        <li>Worked with live sensor data on the physical robot (not just in simulation) to tune perception thresholds and transforms.</li>
+      </ul>
+    </section>
+
+    <section class="story-section">
+      <h2>Human following & perception evolution</h2>
+      <p class="text-slate-700">Initial design used UWB modules for user localization. In field tests UWB was unreliable due to reflections, occlusion, and drift. The team pivoted to a camera-based approach with reflective markers/tape and depth sensing. The RealSense provided stable short-range tracking for human-following — an example of adapting the architecture based on real-world sensor performance.</p>
+    </section>
+
+    <section class="story-section">
+      <h2>Manual + autonomous operation</h2>
+      <p class="text-slate-700">The software supports both manual joystick control and autonomous behaviors through the same drivetrain interface. This separation allowed safe testing and rapid iteration.</p>
+
+      <pre class="bg-slate-50 p-3 rounded text-sm">             ┌──────────────────┐
+             │ Manual Control   │
+             │    / Joystick    │
+             └────────┬─────────┘
+                      │
+                      ▼
+             ┌──────────────────┐
+             │ ROS 2 Behavior / │
+             │ Control Layer    │
+             └────────┬─────────┘
+                      │
+                      ▼
+             ┌──────────────────┐
+             │ Motor Controller │
+             └────────┬─────────┘
+                      │
+                      ▼
+                 Drivetrain
+                      │
+                      ▼
+                  Encoders
+                      │
+                      └──────→ ROS 2
+      </pre>
+    </section>
+
+    <section class="story-section">
+      <h2>Safety & fault handling</h2>
+      <ul>
+        <li>Separated high-level behavior from low-level actuator control to limit unsafe autonomous commands.</li>
+        <li>Used command timeouts and simple stop-on-loss-of-signal semantics to prevent runaway behaviors during communication failures.</li>
+        <li>Tested failure cases on hardware to validate that stopping and emergency behaviors worked in practice.</li>
+      </ul>
+    </section>
+
+    <section class="story-section">
+      <h2>Real-robot integration</h2>
+      <ul>
+        <li>Deployed ROS 2 nodes on Raspberry Pi, integrated motors, encoders, and RealSense camera across the system.</li>
+        <li>Debugged communication, TF frames, and timing issues on the physical robot; iteratively integrated subsystems before full system tests.</li>
+        <li>Validated autonomous behaviors through repeated hardware trials and tuned parameters on the robot rather than in simulation only.</li>
+      </ul>
+    </section>
+
+    <section class="story-section">
+      <h2>Engineering challenges</h2>
+      <div class="grid sm:grid-cols-3 gap-4">
+        <div class="p-3 border rounded bg-white">
+          <strong>Sensor reliability</strong>
+          <p class="text-sm text-slate-700">UWB drift & interference required switching to camera-based short-range perception.</p>
+        </div>
+        <div class="p-3 border rounded bg-white">
+          <strong>HW/SW integration</strong>
+          <p class="text-sm text-slate-700">Managing timing, encoder feedback, and control on a Raspberry Pi under real hardware constraints.</p>
+        </div>
+        <div class="p-3 border rounded bg-white">
+          <strong>Safety</strong>
+          <p class="text-sm text-slate-700">Ensuring safe defaults, timeouts, and stop behaviors when sensors or compute fail.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="story-section">
+      <h2>Results</h2>
+      <ul>
+        <li>Built a working ROS 2 software stack for an autonomous assistive cart deployed on real hardware.</li>
+        <li>Integrated RealSense depth perception, motor/encoder interfaces, and manual/autonomous control modes.</li>
+        <li>Demonstrated reliable short-range human-following behavior after pivoting from UWB.</li>
+        <li>Delivered a modular architecture that supports future behaviors and sensor swaps without major rewrites.</li>
+      </ul>
+    </section>
+
+    <section class="story-section">
+      <h2>Technical stack</h2>
+      <p class="text-sm text-slate-700">ROS 2 · Python/C++ · Raspberry Pi · Intel RealSense · Motor controllers · Wheel encoders · [specific ROS packages present in repo]</p>
+    </section>
+
+    <section class="story-section">
+      <h2>Links</h2>
+      <p>Full repository and project documentation are available for the technical deep dive.</p>
+      <div class="mt-3">
+        <a class="inline-block bg-indigo-600 text-white px-4 py-2 rounded mr-3" href="#" target="_blank" rel="noopener">Repository</a>
+        <a class="inline-block bg-slate-100 text-slate-900 px-4 py-2 rounded" href="#" target="_blank" rel="noopener">Full project doc</a>
+      </div>
+    </section>
+
+    <footer class="footer"> <a href="index.html">Back to home</a>.</footer>
+  </main>
+</body>
+</html>

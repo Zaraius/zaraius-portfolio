@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DinkDonk — RL Pickleball</title>
+  <link rel="stylesheet" href="style.css">
+<script src="https://cdn.tailwindcss.com"></script>
+  <script src="scripts/media-links.js" defer></script>
+</head>
+<body class="bg-slate-50 text-slate-950">
+  <header class="header">
+    <nav class="navbar page">
+      <a class="brand" href="index.html">Zaraius</a>
+      <div class="nav-links space-x-4">
+        <a href="index.html">Home</a>
+        <a href="index.html#work-experience">Work Experience</a>
+        <a href="index.html#project-teams">Project Teams</a>
+        <a href="index.html#projects">Projects</a>
+        <a href="resume.html">Resume</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="detail-hero">
+      <h1>DinkDonk — RL Pickleball</h1>
+      <p class="lead">Unity + ML-Agents environment for learning serve/return and multi-agent rallying. Focused on environment & reward design, diagnosing failure modes, and iterative fixes.</p>
+
+      <figure class="media-figure mt-4 bg-slate-100 rounded" style="height:320px; display:flex; align-items:center; justify-content:center;">
+        <span class="text-slate-500">[PROJECT DEMO VIDEO — REPLACE THIS]</span>
+      </figure>
+
+      <p class="mt-4 text-slate-700">Role: designed the Unity environment, reward functions, observation space, and led iterative debugging of reward exploits and multi-agent experiments.</p>
+    </section>
+
+    <section class="story-section">
+      <h2>Overview</h2>
+      <p>The project builds a simplified 2D/3D Unity pickleball simulator using ML-Agents. Agents control paddle-attached players and learn serve/return behaviors and multi-agent rallying under shaped rewards and constrained observations.</p>
+    </section>
+
+    <section class="story-section">
+      <h2>Environment & implementation</h2>
+      <ul>
+        <li>Unity + ML-Agents simulation with simplified dynamics: player as translating cylinder, paddle with single rotational DOF, and simplified net physics.</li>
+        <li>Observation space includes agent position, ball position, and ball velocity (reduced observation variants used for self-play experiments).</li>
+        <li>Training pipeline uses PPO (ML-Agents) with configurable dense rewards during early exploration.</li>
+      </ul>
+    </section>
+
+    <section class="story-section">
+      <h2>Reward shaping & failure modes</h2>
+      <p class="text-slate-700">Reward design was the central engineering task: initial sparse rewards failed to teach hitting; a proximity reward enabled learning but produced reward-hacking behaviors (net-crossing, ball-holding). Iterative fixes included:</p>
+      <ul>
+        <li>Proximity reward to guide exploration (early training).</li>
+        <li>Net-crossing penalty to prevent physically unrealistic behavior.</li>
+        <li>Penalty for holding the ball on the paddle to stop infinite-collision exploits.</li>
+        <li>Additional reward for lower, realistic returns to shape useful rallying behavior.</li>
+      </ul>
+      <p class="text-slate-700">This cycle — reward design → unexpected exploit → diagnosis → targeted penalty/reward modification — repeated throughout the project and produced steady improvements.</p>
+    </section>
+
+    <section class="story-section">
+      <h2>Results</h2>
+      <ul>
+        <li>Single-agent serve/return model achieved <strong>84% serve-return success rate</strong> in the final evaluation (reported from experiments).</li>
+        <li>Multi-agent extensions used self-play and shared-policy training; shared-policy produced the most stable rally behavior (avg ~4 hits/episode, max ~40 hits observed).</li>
+      </ul>
+    </section>
+
+    <section class="story-section">
+      <h2>Engineering lessons</h2>
+      <ul>
+        <li>Reward shaping dominates emergent behavior; small dense rewards can quickly produce exploitable policies.</li>
+        <li>Observation-space design materially affects stability of self-play; reducing observations to necessary quantities improved training stability.</li>
+        <li>Simulation simplifications (player/paddle model) made training tractable while preserving meaningful interactions to evaluate reward designs.</li>
+      </ul>
+    </section>
+
+    <section class="story-section">
+      <h2>Links & media</h2>
+      <p>Full environment, training scripts, and experiment notes are available in the repository and experiment doc.</p>
+      <div class="mt-3">
+        <a class="inline-block bg-indigo-600 text-white px-4 py-2 rounded mr-3" href="https://github.com/Zaraius/DinkDonk" target="_blank" rel="noopener">Repository</a>
+        <a class="inline-block bg-slate-100 text-slate-900 px-4 py-2 rounded" href="https://docs.google.com/document/d/1ilG-AkkwneAwACDqwpsjhJ4mfP47YAZLipVz83aPljs/edit?usp=sharing" target="_blank" rel="noopener">Experiment notes</a>
+      </div>
+    </section>
+
+    <footer class="footer"> <a href="index.html">Back to home</a>.</footer>
+  </main>
+</body>
+</html>
