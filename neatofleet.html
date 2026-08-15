@@ -26,20 +26,20 @@
 
   <main class="page">
     <section class="detail-hero">
-      <p class="eyebrow">Robotics and ROS 2</p>
+      <p class="eyebrow">Computational Robotics Final Group Project</p>
       <h1>Neato Fleet</h1>
       <p class="lead">I built a ROS 2 multi-robot coordination system that uses RVO2 to route three Neatos around each other.</p>
 
-      <div class="media-pair">
+      <div class="media-pair neato-hero-media">
         <div class="pair-item">
-          <video class="media-video" muted loop playsinline preload="metadata" data-autoplay-on-scroll>
+          <video class="media-video" controls muted loop playsinline preload="metadata" data-autoplay-on-scroll>
             <source src="media/neato_fleet_simulation.webm" type="video/webm">
             Your browser does not support video playback.
           </video>
           <div class="pair-caption">Gazebo simulation using RVO2 for multi-robot collision avoidance.</div>
         </div>
         <div class="pair-item">
-          <video class="media-video" muted loop playsinline preload="metadata" data-autoplay-on-scroll>
+          <video class="media-video" controls muted loop playsinline preload="metadata" data-autoplay-on-scroll>
             <source src="media/neato_fleet_real.mp4" type="video/mp4">
             Your browser does not support video playback.
           </video>
@@ -64,18 +64,62 @@
     </section>
 
     <section class="story-section">
-      <h2>ROS 2 architecture (brief)</h2>
-      <pre class="code-block">Gazebo / sensors --\
-                       odom -> Fleet Controller (Python + RVO2) -> cmd_vel -> Neato robots
-
-Recorder <-> Player (timestamped CSV) for sim-to-real transfer</pre>
+      <h2>Why RVO2</h2>
+      <p>We selected Reciprocal Velocity Obstacles (RVO2) because it gives each robot a local rule for choosing a safe velocity around nearby moving agents. Our implementation used <a href="https://github.com/sybrenstuvel/Python-RVO2" target="_blank" rel="noopener">Python-RVO2</a>, a Python binding of the standard RVO2 library, based on the paper <a href="https://www.researchgate.net/publication/221073351_Reciprocal_Velocity_Obstacles_for_Real-Time_Multi-agent_Navigation" target="_blank" rel="noopener">"Reciprocal Velocity Obstacles for Real-Time Multi-Agent Navigation"</a> by van den Berg et al.</p>
+      <div class="media-pair">
+        <div class="pair-item">
+          <img src="media/neato_fleet_rvo2_paper_figure.jpg" alt="RVO2 paper figure showing reciprocal velocity obstacle geometry">
+          <div class="pair-caption">The core idea: each agent adjusts velocity while sharing responsibility for avoiding collisions.</div>
+        </div>
+        <div class="pair-item">
+          <img src="media/rvo_example.jpeg" alt="Four simulated RVO2 agents crossing in a plus formation">
+          <div class="pair-caption">Our Python-RVO2 simulation with four agents crossing in a plus formation while avoiding each other.</div>
+        </div>
+      </div>
+      <div class="minimal-list">
+        <div class="minimal-row">
+          <strong>Collision-free choices</strong>
+          <p>If neighboring agents choose velocities outside each other's reciprocal velocity obstacle, their short-term motion is collision-free.</p>
+        </div>
+        <div class="minimal-row">
+          <strong>Shared passing side</strong>
+          <p>Choosing the nearest safe velocity tends to make both agents pick the same passing side, which keeps the interaction coordinated.</p>
+        </div>
+        <div class="minimal-row">
+          <strong>Less oscillation</strong>
+          <p>The updated preferred velocity remains inside the new obstacle region, reducing the flip-flop behavior that can happen with purely reactive avoidance.</p>
+        </div>
+      </div>
     </section>
 
     <section class="story-section">
-      <h2>Engineering challenge (the real story)</h2>
-      <div class="story-callout">
-        <strong>Challenge:</strong> RVO2 assumes accurate relative positions/velocities. On the Neatos, encoder drift, wheel slip, and network latency broke those assumptions.
-        <p>Rather than forcing an unreliable closed-loop system, the design changed: run RVO2 in simulation, record deterministic trajectories, and replay them on the physical robots with synchronized starts. This tradeoff validated the algorithmic behavior on hardware while acknowledging the platform's limits.</p>
+      <h2>System Architecture</h2>
+      <p>The final architecture became a two-phase pipeline. We trusted Gazebo for clean state and trajectory generation, then replayed the captured commands on hardware rather than closing the loop on noisy onboard odometry.</p>
+      <div class="pipeline-grid">
+        <div class="pipeline-card">
+          <h3>Simulation and Capture</h3>
+          <p>Gazebo provided ground truth. The RVO controller ran in a clean physics environment and produced an ideal command trajectory.</p>
+          <div class="pipeline-flow">
+            <div class="pipeline-node">YAML Config <span>fleet_config.yaml</span></div>
+            <div class="pipeline-link">params</div>
+            <div class="pipeline-node">RVO Controller <span>rvo_fleet_controller.py</span></div>
+            <div class="pipeline-link">/cmd_vel</div>
+            <div class="pipeline-node">Gazebo Sim <span>Physics engine</span></div>
+            <div class="pipeline-link">record</div>
+            <div class="pipeline-node">CSV Artifact <span>trajectory_[date].csv</span></div>
+          </div>
+        </div>
+        <div class="pipeline-card">
+          <h3>Open-Loop Playback</h3>
+          <p>The command player read the CSV and streamed velocity commands to the physical robots, bypassing the unreliable onboard state estimate.</p>
+          <div class="pipeline-flow">
+            <div class="pipeline-node">CSV Artifact <span>trajectory_[date].csv</span></div>
+            <div class="pipeline-link">parse</div>
+            <div class="pipeline-node">Cmd Player <span>cmd_player.py</span></div>
+            <div class="pipeline-link">serial</div>
+            <div class="pipeline-node">Physical Fleet <span>Neato XV-11 x3</span></div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -89,7 +133,41 @@ Recorder <-> Player (timestamped CSV) for sim-to-real transfer</pre>
     </section>
 
     <section class="story-section">
-      <h2>Want the deep dive?</h2>
+      <h2>Limitations and critique</h2>
+      <div class="story-callout">
+        <strong>Challenge:</strong> RVO2 assumes accurate relative positions/velocities. On the Neatos, encoder drift, wheel slip, and network latency broke those assumptions.
+        <p>Rather than forcing an unreliable closed-loop system, the design changed: run RVO2 in simulation, record deterministic trajectories, and replay them on the physical robots with synchronized starts. This tradeoff validated the algorithmic behavior on hardware while acknowledging the platform's limits.</p>
+      </div>
+      <div class="minimal-list">
+        <div class="minimal-row">
+          <strong>Sensing assumptions</strong>
+          <p>The theoretical guarantees depend on accurate relative position and velocity data. Wheel slip and encoder drift made the Neatos' onboard estimates diverge from reality.</p>
+        </div>
+        <div class="minimal-row">
+          <strong>Robot motion limits</strong>
+          <p>RVO2 treats agents as holonomic, but the Neatos are differential-drive robots. The heading controller introduced tracking error when converting ideal velocities into feasible commands.</p>
+        </div>
+        <div class="minimal-row">
+          <strong>Local planning only</strong>
+          <p>RVO2 is reactive. It works well for local avoidance, but complex environments can still require a global planner to avoid deadlocks or obstacle traps.</p>
+        </div>
+        <div class="minimal-row">
+          <strong>Future localization</strong>
+          <p>An overhead AprilTag or OptiTrack setup would let the system close the loop in real time instead of relying on open-loop replay.</p>
+        </div>
+        <div class="minimal-row">
+          <strong>Lower-latency control</strong>
+          <p>Moving more computation onto the robots could reduce Wi-Fi latency and make the relative-state updates more useful.</p>
+        </div>
+        <div class="minimal-row">
+          <strong>Dynamic obstacles</strong>
+          <p>LiDAR-based obstacle injection would let the solver react to unmapped objects, including people moving through the test space.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="story-section">
+      <h2>Source code and website</h2>
       <p>Full technical details, equations, and launch configs are on the <a href="https://neato-fleet.netlify.app/" target="_blank" rel="noopener">project site</a>, and the implementation is on <a href="https://github.com/redhotchili0909/neato_fleet" target="_blank" rel="noopener">GitHub</a>. The portfolio page keeps the narrative short; click through for the full report.</p>
     </section>
 

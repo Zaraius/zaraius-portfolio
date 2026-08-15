@@ -63,7 +63,6 @@
 
     if (media instanceof HTMLVideoElement) {
       media.classList.add("media-raw-link");
-      media.addEventListener("click", () => openRawMedia(absoluteUrl));
       return;
     }
 

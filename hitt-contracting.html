@@ -48,7 +48,7 @@
       <h2>The ZED and the skeleton tracking layer</h2>
       <p>The first step was getting reliable human detections from the ZED 2i. The camera provided body tracking, skeletons, and bounding boxes that let the system estimate where people were in the scene and how their body posture might influence the robot's behavior.</p>
       <figure class="media-figure">/
-        <video class="media-video" muted loop playsinline preload="metadata" data-autoplay-on-scroll width="90%">
+        <video class="media-video" controls muted loop playsinline preload="metadata" data-autoplay-on-scroll width="90%">
           <source src="media/zed_demo.mp4" type="video/mp4">
           Your browser does not support video playback.
         </video>
@@ -62,7 +62,7 @@
       <p>The first step was getting reliable human detections from the ZED 2i. The camera provided body tracking, skeletons, and bounding boxes that let the system estimate where people were in the scene and how their body posture might influence the robot's behavior</p>
       <p>Once the detections were flowing in, the next step was turning them into something more useful than a raw point in space. I used the tracked skeleton keypoints to classify posture and estimate more than just position. That let the system distinguish between someone who was standing still, walking, sitting, or lying down, which matters a lot when you are trying to decide how aggressively the robot should give space.</p>
       <figure class="media-figure">
-        <video class="media-video" muted loop playsinline preload="metadata" data-autoplay-on-scroll>
+        <video class="media-video" controls muted loop playsinline preload="metadata" data-autoplay-on-scroll>
           <source src="media/ActivityDetection_cropped.mp4" type="video/mp4">
           Your browser does not support video playback.
         </video>
@@ -84,7 +84,7 @@
       <h2>Simulation and testing</h2>
       <p>Before taking the system to a real jobsite, I tested it in simulation so I could get a sense of whether the planner was reacting in a stable, understandable way. The simulation environment helped isolate the social planner from hardware noise and gave a cleaner view of how the behavior changed with different people and trajectories.</p>
       <figure class="media-figure">
-        <video class="media-video" muted loop playsinline preload="metadata" data-autoplay-on-scroll>
+        <video class="media-video" controls muted loop playsinline preload="metadata" data-autoplay-on-scroll>
           <source src="media/SocialCriticSimClipCompressed-h264.mp4" type="video/mp4">
           Your browser does not support video playback.
         </video>
@@ -98,14 +98,14 @@
       <p>A side-by-side comparison highlights the difference. Without the critic, Spot only notices the person once its obstacle avoidance kicks in and has to replan its path and blocks the route. With the custom social critic, Spot immediately adjusts its heading to signal its intent to yield and gives a comfortable distance to the walking person and finally returns to the original path.</p>
       <div class="flex flex-col gap-6 md:flex-row md:items-start md:gap-8">
         <figure class="media-figure basis-1/2">
-          <video class="media-video" muted loop playsinline preload="metadata" data-autoplay-on-scroll>
+          <video class="media-video" controls muted loop playsinline preload="metadata" data-autoplay-on-scroll>
             <source src="media/head_on_walking_noCritic.mp4" type="video/mp4">
             Your browser does not support video playback.
           </video>
           <figcaption>Without the social critic</figcaption>
         </figure>
         <figure class="media-figure basis-1/2">
-          <video class="media-video" muted loop playsinline preload="metadata" data-autoplay-on-scroll>
+          <video class="media-video" controls muted loop playsinline preload="metadata" data-autoplay-on-scroll>
             <source src="media/head_on_walking.mp4" type="video/mp4">
             Your browser does not support video playback.
           </video>

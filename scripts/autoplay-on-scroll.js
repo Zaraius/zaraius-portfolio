@@ -13,6 +13,10 @@
   };
 
   const play = (video) => {
+    if (video.dataset.userPaused === "true") {
+      return;
+    }
+
     prepareForAutoplay(video);
 
     const playPromise = video.play();

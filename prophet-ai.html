@@ -34,7 +34,7 @@
       <h2>Shrinking compute with pixel differencing</h2>
       <p>Running inference on every single frame wastes compute because chickens are mainly static. I implemented a pixel-differencing pre-filter that isolates moving regions and only sends those crops to the detector. This reduced the number of frames requiring detection by about 75%, lowering CPU and bandwidth usage and making edge deployments practical.</p>
       <figure class="media-figure">
-        <video class="media-video" muted loop playsinline preload="metadata" data-autoplay-on-scroll>
+        <video class="media-video" controls muted loop playsinline preload="metadata" data-autoplay-on-scroll>
           <source src="media/frame_differencing-h264.mp4" type="video/mp4">
           Your browser does not support video playback.
         </video>
