@@ -31,7 +31,7 @@
 
       <figure class="media-figure">
         <img src="media/snake_demo.gif" alt="Snake demo">
-        <figcaption>Trained Snake agent running after the reproduction and improvement pass.</figcaption>
+        <figcaption>Demo of the snake agent reaching a score of 98.</figcaption>
       </figure>
 
       <p class="story-meta">Role: implemented the environment, Double DQN agent, training loop, logging, and evaluation pipeline.</p>
@@ -39,7 +39,7 @@
 
     <section class="story-section">
       <h2>Project summary</h2>
-      <p>Reproduced Sebastianelli et al.'s DQN-based Snake baseline, found practical limitations, and designed a richer 27-dimensional state that improved performance and robustness.</p>
+      <p>TODO add the link: https://ieeexplore.ieee.org/document/9480232   Reproduced Sebastianelli et al.'s DQN-based Snake baseline, found practical limitations, and designed a richer 27-dimensional state that improved performance and robustness.</p>
     </section>
 
     <section class="story-section">
@@ -51,7 +51,7 @@
         <li>Network architecture: 3 hidden layers x 512 units; outputs: 3 Q-values (straight, left, right).</li>
       </ul>
     </section>
-
+todo add image of rl_snake_11_binary_values.png and caption it, 11 input values originally suggested by paper
     <section class="story-section">
       <h2>Experimental progression & results</h2>
       <p>Progression: reproduce the baseline, diagnose failures, add raycasting and reachability, train Double DQN, then evaluate.</p>
@@ -71,7 +71,8 @@
         <li><code>train.py</code>, <code>plot.py</code>, <code>record_best_game.py</code> for training and evaluation.</li>
       </ul>
     </section>
-
+in my readme i talk about the journey and i think its really beautiful, I have it as RL_SNAKE_README.md in the same folder as this file, can you read through it and make sure the biggest highlights, my executive summary, and the journey are captured, i want to have the videos of the 100 epoch, 250 epoch and 500 epochs shown as a journey and also mention its tendency to self-trap and then i expanded/went rougue and did't follow the paper
+HOWEVER make this this page is small and concise and do not add more things than neccessary, also they have the link to the github so if they really want more info they can go there
     <section class="story-section">
       <h2>Engineering lessons</h2>
       <ul>
