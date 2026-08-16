@@ -6,6 +6,7 @@
   <title>Muteify | Automatic Spotify Ad Muter</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="scripts/autoplay-on-scroll.js" defer></script>
   <script src="scripts/media-links.js" defer></script>
 </head>
 <body class="bg-slate-50 text-slate-950">
@@ -28,9 +29,11 @@
       <p class="eyebrow">C Systems Utility</p>
       <h1>Muteify</h1>
       <p class="lead">I built a small C utility that mutes Spotify ads by polling the Spotify Web API and controlling Linux system audio.</p>
-TODO convert this into a mp4 or webm. and add controls and autoplay on scroll
       <figure class="media-figure">
-        <img src="https://raw.githubusercontent.com/Zaraius/muteify/main/Muteify_demo-ezgif.com-video-to-gif-converter.gif" alt="Muteify demo">
+        <video class="media-video" controls muted loop playsinline preload="metadata" data-autoplay-on-scroll>
+          <source src="media/muteify-demo.mp4" type="video/mp4">
+          Your browser does not support video playback.
+        </video>
         <figcaption>Automatic mute and unmute behavior during Spotify ad playback.</figcaption>
       </figure>
 

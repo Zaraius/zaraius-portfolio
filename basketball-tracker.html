@@ -28,9 +28,8 @@
       <p class="eyebrow">Computer Vision Project</p>
       <h1>Basketball Tracker</h1>
       <p class="lead">I built a computer vision pipeline that estimates basketball trajectory and kinematics from monocular iPhone video.</p>
-TODO replace this with final_overlay.gif in media instead of outlinking to raw github, unless it is best practice to do it this way, then let me know
       <figure class="media-figure">
-        <img src="https://raw.githubusercontent.com/Zaraius/basketball-tracker/main/final_overlay.gif" alt="Basketball tracking overlay">
+        <img src="media/final_overlay.gif" alt="Basketball tracking overlay">
         <figcaption>Final overlay showing detection, depth estimation, and trajectory visualization.</figcaption>
       </figure>
 
@@ -85,22 +84,19 @@ TODO replace this with final_overlay.gif in media instead of outlinking to raw g
       </ul>
     </section>
     <section class="story-section">
-TODO are you able to make this look less bulky? the text looks somewhat weird within the box, maybe we simplify it, not exactly sure what is wrong, maybe unbold it or bigger spacing on the words
-
       <h2>Pipeline diagram</h2>
       <div class="pipeline-grid">
-        <div class="pipeline-card">
-          <h3>Vision to kinematics</h3>
+        <div class="pipeline-card pipeline-card-slim">
           <div class="pipeline-flow">
-            <div class="pipeline-node">iPhone Video(shot footage)</div>
+            <div class="pipeline-node">iPhone video</div>
             <div class="pipeline-link">detect</div>
-            <div class="pipeline-node">YOLO Detection(ball bounding box)</div>
+            <div class="pipeline-node">YOLO ball detection</div>
             <div class="pipeline-link">refine</div>
-            <div class="pipeline-node">Hough Circle(center and diameter)</div>
+            <div class="pipeline-node">Hough circle fit</div>
             <div class="pipeline-link">calibrate</div>
-            <div class="pipeline-node">Depth Estimate(pixel diameter to z)</div>
+            <div class="pipeline-node">Depth estimate</div>
             <div class="pipeline-link">compute</div>
-            <div class="pipeline-node">3D Trajectory(position, velocity, acceleration)</div>
+            <div class="pipeline-node">3D trajectory</div>
           </div>
         </div>
       </div>
