@@ -39,7 +39,7 @@
 
     <section class="story-section">
       <h2>Project summary</h2>
-      <p>TODO add the link: https://ieeexplore.ieee.org/document/9480232   Reproduced Sebastianelli et al.'s DQN-based Snake baseline, found practical limitations, and designed a richer 27-dimensional state that improved performance and robustness.</p>
+      <p>I reproduced Sebastianelli et al.'s <a href="https://ieeexplore.ieee.org/document/9480232" target="_blank" rel="noopener">DQN-based Snake paper</a>, found where the baseline struggled in practice, and then deliberately moved beyond the paper with a richer 27-dimensional state and Double DQN training.</p>
     </section>
 
     <section class="story-section">
@@ -51,28 +51,45 @@
         <li>Network architecture: 3 hidden layers x 512 units; outputs: 3 Q-values (straight, left, right).</li>
       </ul>
     </section>
-todo add image of rl_snake_11_binary_values.png and caption it, 11 input values originally suggested by paper
+
     <section class="story-section">
-      <h2>Experimental progression & results</h2>
-      <p>Progression: reproduce the baseline, diagnose failures, add raycasting and reachability, train Double DQN, then evaluate.</p>
-      <ul>
-        <li>Best checkpoint: <strong>Episode 14,000</strong>.</li>
-        <li>50-game evaluation: Mean <strong>62.4</strong>, Median <strong>58</strong>, Max <strong>98</strong>, Success rate (score at least 50): <strong>68%</strong>.</li>
-        <li>Result: exceeded the paper's reported best mean (56) using the 27D state + Double DQN improvements.</li>
-      </ul>
+      <h2>Baseline reproduction</h2>
+      <p>The original state representation used 11 binary-style inputs: immediate danger, food direction, and current movement direction. It was enough to learn basic food-seeking, but it did not let the agent reason about its own body, distant walls, or whether a move would trap it later.</p>
+      <figure class="media-figure compact-media">
+        <img src="media/rl_snake_11_binary_values.png" alt="Original eleven-value Snake state representation">
+        <figcaption>Eleven input values originally suggested by the paper.</figcaption>
+      </figure>
     </section>
 
     <section class="story-section">
-      <h2>Implementation details</h2>
+      <h2>The training journey</h2>
+      <p>The baseline got visibly better over time, but its weakness stayed the same: as the snake grew, it would loop, corner itself, or take moves that looked good one step ahead and were fatal a few steps later. That is where I stopped strictly following the paper and expanded the state with raycasting and bounded BFS reachability.</p>
+      <div class="media-triptych">
+        <figure class="media-figure">
+          <img src="media/original_100epoch (1).gif" alt="Snake baseline after 100 epochs">
+          <figcaption>100 epochs: early food-seeking, lots of looping.</figcaption>
+        </figure>
+        <figure class="media-figure">
+          <img src="media/original_250epoch (1).gif" alt="Snake baseline after 250 epochs">
+          <figcaption>250 epochs: better collection, still brittle around its body.</figcaption>
+        </figure>
+        <figure class="media-figure">
+          <img src="media/original_500epoch (1).gif" alt="Snake baseline after 500 epochs">
+          <figcaption>500 epochs: strong in open space, still prone to self-trapping.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="story-section">
+      <h2>Results</h2>
+      <p>After adding 8-direction raycasting, food distance, reachability checks, and Double DQN, the best checkpoint came from episode 14,000.</p>
       <ul>
-        <li><code>agent.py</code>: Double DQN agent with GPU support, replay buffer, epsilon-greedy policy.</li>
-        <li><code>game.py</code>: environment implementing 27D state and bounded BFS reachability check.</li>
-        <li><code>model.py</code>: neural network (512-512-512), ReLU, Adam optimizer.</li>
-        <li><code>train.py</code>, <code>plot.py</code>, <code>record_best_game.py</code> for training and evaluation.</li>
+        <li>50-game evaluation: Mean <strong>62.4</strong>, Median <strong>58</strong>, Max <strong>98</strong>, Success rate (score at least 50): <strong>68%</strong>.</li>
+        <li>Result: exceeded the paper's reported best mean (56) using the 27D state + Double DQN improvements.</li>
+        <li>Implementation lived in a compact Python stack: environment, Double DQN agent, training loop, plotting, and replay tools.</li>
       </ul>
     </section>
-in my readme i talk about the journey and i think its really beautiful, I have it as RL_SNAKE_README.md in the same folder as this file, can you read through it and make sure the biggest highlights, my executive summary, and the journey are captured, i want to have the videos of the 100 epoch, 250 epoch and 500 epochs shown as a journey and also mention its tendency to self-trap and then i expanded/went rougue and did't follow the paper
-HOWEVER make this this page is small and concise and do not add more things than neccessary, also they have the link to the github so if they really want more info they can go there
+
     <section class="story-section">
       <h2>Engineering lessons</h2>
       <ul>

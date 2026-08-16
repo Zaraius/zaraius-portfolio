@@ -6,6 +6,7 @@
   <title>DinkDonk | RL Pickleball</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="scripts/autoplay-on-scroll.js" defer></script>
   <script src="scripts/media-links.js" defer></script>
 </head>
 <body class="bg-slate-50 text-slate-950">
@@ -30,7 +31,11 @@
       <p class="lead">I built a Unity ML-Agents pickleball environment for serve, return, and multi-agent rally experiments.</p>
 
       <figure class="media-figure">
-        <div class="placeholder-media">Add DinkDonk gameplay or training media here.</div>
+        <video class="media-video" controls muted loop playsinline preload="metadata" poster="media/dinkdonk-poster.jpg" data-autoplay-on-scroll>
+          <source src="media/DinkDonkVideo.mp4#t=35" type="video/mp4">
+          Your browser does not support video playback.
+        </video>
+        <figcaption>Training and evaluation clips from the DinkDonk Unity environment.</figcaption>
       </figure>
 
       <p class="story-meta">Role: designed the Unity environment, reward functions, observation space, and debugging process for reward exploits and multi-agent experiments.</p>
@@ -48,8 +53,12 @@
         <li>Observation space includes agent position, ball position, and ball velocity (reduced observation variants used for self-play experiments).</li>
         <li>Training pipeline uses PPO (ML-Agents) with configurable dense rewards during early exploration.</li>
       </ul>
+      <figure class="media-figure">
+        <img src="media/rl_pickleball_environment.png" alt="Unity ML-Agents pickleball environment">
+        <figcaption>Unity environment setup with player agents, paddles, ball, net, court, and walls.</figcaption>
+      </figure>
     </section>
-TODO add image of rl_pickleball_environment
+
     <section class="story-section">
       <h2>Reward shaping & failure modes</h2>
       <p>Reward design was the central engineering task. Initial sparse rewards failed to teach hitting; a proximity reward enabled learning but produced reward-hacking behaviors like net-crossing and ball-holding. Iterative fixes included:</p>
@@ -60,13 +69,17 @@ TODO add image of rl_pickleball_environment
         <li>Additional reward for lower, realistic returns to shape useful rallying behavior.</li>
       </ul>
       <p>This cycle repeated throughout the project: reward design, unexpected exploit, diagnosis, then targeted penalty or reward modification.</p>
+      <figure class="media-figure compact-media">
+        <img src="media/rl_pickleball_rewards.png" alt="DinkDonk reward and penalty table">
+        <figcaption>Final reward and penalty structure after removing the biggest reward exploits.</figcaption>
+      </figure>
     </section>
-TODO add image of rl_pickleball_rewards
+
     <section class="story-section">
       <h2>Results</h2>
       <ul>
         <li>Single-agent serve/return model achieved <strong>84% serve-return success rate</strong> in the final evaluation (reported from experiments).</li>
-        <li>Multi-agent extensions used self-play and shared-policy training; shared-policy produced the most stable rally behavior (avg ~4 hits/episode, max ~40 hits observed).</li>
+        <li>Multi-agent extensions used self-play and shared-policy training; shared-policy produced the most stable rally behavior, with an average around 4 hits per episode and a max around 40 hits observed.</li>
       </ul>
     </section>
 
@@ -81,9 +94,9 @@ TODO add image of rl_pickleball_rewards
 
     <section class="story-section">
       <h2>Links & media</h2>
-      <p>The full environment and training scripts are on <a href="https://github.com/Zaraius/DinkDonk" target="_blank" rel="noopener">GitHub</a>, with a full report with more detail in the TODO change this link to Machine Learning DinkDonk Final Project Report.pdf<a href="" target="_blank" rel="noopener">experiment notes</a>.</p>
+      <p>The full environment and training scripts are on <a href="https://github.com/Zaraius/DinkDonk" target="_blank" rel="noopener">GitHub</a>, with more detail in the <a href="media/Machine%20Learning%20DinkDonk%20Final%20Project%20Report.pdf" target="_blank" rel="noopener">Machine Learning DinkDonk final report</a>.</p>
     </section>
-TODO read through the report and let me know if there are any big huge things you think must be added to this, but I think the video does a really good job of capturing everything so i want to keep this page minimal and concise.
+
     <footer class="footer"> <a href="index.html">Back to home</a>.</footer>
   </main>
 </body>

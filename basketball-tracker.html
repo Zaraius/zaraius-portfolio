@@ -28,7 +28,7 @@
       <p class="eyebrow">Computer Vision Project</p>
       <h1>Basketball Tracker</h1>
       <p class="lead">I built a computer vision pipeline that estimates basketball trajectory and kinematics from monocular iPhone video.</p>
-
+TODO replace this with final_overlay.gif in media instead of outlinking to raw github, unless it is best practice to do it this way, then let me know
       <figure class="media-figure">
         <img src="https://raw.githubusercontent.com/Zaraius/basketball-tracker/main/final_overlay.gif" alt="Basketball tracking overlay">
         <figcaption>Final overlay showing detection, depth estimation, and trajectory visualization.</figcaption>
@@ -49,16 +49,26 @@
         <li>Trained a <strong>YOLOv11n</strong> detector on basketball images; iteratively generated and corrected frames to improve performance on distant and partially occluded balls.</li>
         <li>Used Hough Circle Transform to refine center & diameter estimates because bounding boxes alone were too loose for geometric depth estimation.</li>
       </ul>
+      <figure class="media-figure compact-media">
+        <img src="media/basketball_tracker_yolo.png" alt="YOLO basketball detector training result">
+        <figcaption>YOLOv11n detector output after iteratively generating and correcting basketball frames.</figcaption>
+      </figure>
     </section>
-TODO add image of basketball_tracker_yolo.png. say we trained a YOLOv11n detector on basketball images, and iteratively generated and corrected frames to improve performance on distant and partially occluded balls. media/basketball_tracker_yolo.png
+
     <section class="story-section">
       <h2>Depth calibration & 3D pipeline</h2>
-      <p>ArUco tags were attempted and proved unreliable; the final approach used the apparent basketball diameter in pixels with a calibration curve (measured at known distances) to estimate depth (z). Combined with YOLO/Hough x,y, this produced per-frame x,y,z positions which were converted to trajectories, velocities, and accelerations.</p>
+      <p>ArUco tags were attempted and proved unreliable; the final approach used the apparent basketball diameter in pixels with a calibration curve to estimate depth. We photographed the ball at a fixed x/y position every foot across the usable range, measured the real depth for each frame, and compared it against the detected basketball diameter in pixels. Combined with YOLO/Hough x,y, this produced per-frame x,y,z positions that could be converted into trajectories, velocities, and accelerations.</p>
+      <div class="media-pair">
+        <div class="pair-item">
+          <img src="media/11ft_processed.jpg" alt="Processed basketball frame at eleven feet">
+          <div class="pair-caption">Processed calibration frame at a known depth.</div>
+        </div>
+        <div class="pair-item">
+          <img src="media/basketball_tracker_calibration.png" alt="Basketball pixel diameter to depth calibration curve">
+          <div class="pair-caption">Pixel-diameter-to-depth calibration built from one-foot interval images.</div>
+        </div>
+      </div>
     </section>
-    TODO add image of 11ft_processed.jpg. say we took images every 1 feet and created a calibration curve. media/basketball_tracker_calibration.png
-more text for you:
-Finally, we took a series of photos of the ball at a constant x and y position, but different z (depths). We measured each photo's depth and compared that to the size of the basketball in the image to create a pixel-to-depth calibration. Later on in this report, we use a Hough transformation to clearly identify the diameter of a basketball, and obtain a clearer depth.
-
 
     <section class="story-section">
       <h2>Kinematics & visualization</h2>
@@ -74,22 +84,33 @@ Finally, we took a series of photos of the ball at a constant x and y position, 
         <li>YOLO bounding boxes improve localization but need geometric refinement for quantitative metrics.</li>
       </ul>
     </section>
-
-    TODO can you make this diagram look better? maybe use the same style as used on neatofleet?, also can you add arrows to neatofleets diagram
     <section class="story-section">
+TODO are you able to make this look less bulky? the text looks somewhat weird within the box, maybe we simplify it, not exactly sure what is wrong, maybe unbold it or bigger spacing on the words
+
       <h2>Pipeline diagram</h2>
-      <pre class="code-block">video -> YOLO detection -> Hough Circle refinement -> pixel diameter -> depth calibration -> 3D position -> trajectory -> kinematics</pre>
+      <div class="pipeline-grid">
+        <div class="pipeline-card">
+          <h3>Vision to kinematics</h3>
+          <div class="pipeline-flow">
+            <div class="pipeline-node">iPhone Video(shot footage)</div>
+            <div class="pipeline-link">detect</div>
+            <div class="pipeline-node">YOLO Detection(ball bounding box)</div>
+            <div class="pipeline-link">refine</div>
+            <div class="pipeline-node">Hough Circle(center and diameter)</div>
+            <div class="pipeline-link">calibrate</div>
+            <div class="pipeline-node">Depth Estimate(pixel diameter to z)</div>
+            <div class="pipeline-link">compute</div>
+            <div class="pipeline-node">3D Trajectory(position, velocity, acceleration)</div>
+          </div>
+        </div>
+      </div>
     </section>
-
     <section class="story-section">
-      <h2>Results & artifacts</h2>
-      <ul>
-        <li>Final overlay and 3D visualization are available in the <a href="https://github.com/Zaraius/basketball-tracker" target="_blank" rel="noopener">GitHub repository</a> media (<code>final_overlay.gif</code>, <code>overlay_3d.mp4</code>).</li>
-        <li>Approach successfully produces visually informative overlays and approximate kinematics; not yet reliable for accurate shot detection without higher-fidelity sensors or multi-camera setups.</li>
-      TODO add a funny note saying our real biggest challenge was playing basketball.
-      </ul>
+      <h2>Links</h2>
+      <p>The source code for the tracker is available on <a href="https://github.com/Zaraius/basketball-tracker" target="_blank" rel="noopener">GitHub</a>.</p>
     </section>
 
+    <p class="easter-egg">The hardest part about this project was playing basketball.</p>
     <footer class="footer"> <a href="index.html">Back to home</a>.</footer>
   </main>
 </body>
