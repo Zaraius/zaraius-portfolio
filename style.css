@@ -169,6 +169,7 @@ video.media-raw-link { display: block; cursor: default; }
 .media-pair img.cad-mount-image { width: 60%; margin-left: auto; margin-right: auto; }
 .media-pair .pair-caption { margin-top: 8px; color: var(--muted); font-size: 0.95rem; }
 .media-figure figcaption { margin-top: 12px; color: var(--muted); font-size: 1rem; line-height: 1.7; }
+.portrait-media { max-width: 520px; margin-left: auto; margin-right: auto; }
 .resume-frame {
  width: 100%;
  min-height: 720px;
