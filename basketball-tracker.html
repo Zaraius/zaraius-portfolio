@@ -7,18 +7,17 @@
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="scripts/media-links.js" defer></script>
+  <script src="scripts/autoplay-on-scroll.js" defer></script>
 </head>
 <body class="bg-slate-50 text-slate-950">
   <header class="header">
     <nav class="navbar page">
       <a class="brand" href="index.html">Zaraius</a>
-      <div class="nav-links space-x-4">
+      <div class="nav-links">
         <a href="index.html">Home</a>
         <a href="index.html#work-experience">Work Experience</a>
-        <a href="index.html#project-teams">Project Teams</a>
         <a href="index.html#projects">Projects</a>
-        <a href="resume.html">Resume</a>
-        <a href="contact.html">Contact</a>
+        <a href="media/ZaraiusBilimoria%20Resume.pdf" target="_blank" rel="noopener">Resume</a>
       </div>
     </nav>
   </header>
@@ -29,7 +28,9 @@
       <h1>Basketball Tracker</h1>
       <p class="lead">I built a computer vision pipeline that estimates basketball trajectory and kinematics from monocular iPhone video.</p>
       <figure class="media-figure">
-        <img src="media/final_overlay.gif" alt="Basketball tracking overlay">
+        <video class="media-video" controls muted loop playsinline preload="metadata" data-autoplay-on-scroll>
+          <source src="media/final_overlay.mp4" type="video/mp4">
+        </video>
         <figcaption>Final overlay showing detection, depth estimation, and trajectory visualization.</figcaption>
       </figure>
 
@@ -62,7 +63,7 @@
           <img src="media/11ft_processed.jpg" alt="Processed basketball frame at eleven feet">
           <div class="pair-caption">Processed calibration frame at a known depth.</div>
         </div>
-        <div class="pair-item">
+        <div class="pair-item diagram-panel">
           <img src="media/basketball_tracker_calibration.png" alt="Basketball pixel diameter to depth calibration curve">
           <div class="pair-caption">Pixel-diameter-to-depth calibration built from one-foot interval images.</div>
         </div>
@@ -85,8 +86,8 @@
     </section>
     <section class="story-section">
       <h2>Pipeline diagram</h2>
-      <div class="pipeline-grid">
-        <div class="pipeline-card pipeline-card-slim">
+      <div class="pipeline-grid pipeline-grid-compact">
+        <div class="pipeline-card">
           <div class="pipeline-flow">
             <div class="pipeline-node">iPhone video</div>
             <div class="pipeline-link">detect</div>
@@ -107,7 +108,13 @@
     </section>
 
     <p class="easter-egg">The hardest part about this project was playing basketball.</p>
-    <footer class="footer"> <a href="index.html">Back to home</a>.</footer>
+    <footer class="footer footer-contact">
+      <a href="index.html">Back to home</a>
+      <span class="footer-links">
+        <a href="mailto:zaraiusbillimoria@gmail.com">zaraiusbillimoria@gmail.com</a>
+        <a href="https://www.linkedin.com/in/zaraius-bilimoria" target="_blank" rel="noopener">LinkedIn</a>
+      </span>
+    </footer>
   </main>
 </body>
 </html>

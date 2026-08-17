@@ -13,13 +13,11 @@
   <header class="header">
     <nav class="navbar page">
       <a class="brand" href="index.html">Zaraius</a>
-      <div class="nav-links space-x-4">
+      <div class="nav-links">
         <a href="index.html">Home</a>
         <a href="index.html#work-experience">Work Experience</a>
-        <a href="index.html#project-teams">Project Teams</a>
         <a href="index.html#projects">Projects</a>
-        <a href="resume.html">Resume</a>
-        <a href="contact.html">Contact</a>
+        <a href="media/ZaraiusBilimoria%20Resume.pdf" target="_blank" rel="noopener">Resume</a>
       </div>
     </nav>
   </header> 
@@ -35,7 +33,7 @@
 
     <section class="story-section">
       <h2>Project Overview</h2>
-      <p>Construction sites are a challenging environment for autonomous robots: people move unpredictably, spaces change constantly, and traditional obstacle avoidance can react too late. During my internship at HITT Contracting, I built a social navigation layer for Boston Dynamics Spot that combined human perception, tracking, and motion planning to make the robot respond more naturally around people. Running entirely on edge compute via a Jetson Orin AGX, I developed a containerized ROS2 pipeline that utilized a ZED 2i camera and an Ouster Lidar. By feeding real-time skeleton tracking into a custom Nav2 MPPI critic, the robot could proactively adjust its trajectory and yield to pedestrians in dynamic environments.</p>
+      <p>Construction sites are hard for autonomous robots. People move unpredictably, layouts change constantly, and standard obstacle avoidance often reacts too late. During my internship at HITT Contracting, I built a social navigation layer for Boston Dynamics Spot that combined human perception, tracking, and motion planning to make the robot respond more naturally around people. Running entirely on edge compute via a Jetson Orin AGX, I developed a containerized ROS2 pipeline that utilized a ZED 2i camera and an Ouster Lidar. By feeding real-time skeleton tracking into a custom Nav2 MPPI critic, the robot could proactively adjust its trajectory and yield to pedestrians in dynamic environments.</p>
       <!-- <p>The goal was not to make Spot perfect. It was to make it behave more like a robot that understands the world around it, especially when people are close, moving, and changing the space in real time.</p> -->
     </section>
 
@@ -59,7 +57,7 @@
 
     <section class="story-section">
       <h2>Human Perception</h2>
-      <p>The first step was getting reliable human detections from the ZED 2i. The camera provided body tracking, skeletons, and bounding boxes that let the system estimate where people were in the scene and how their body posture might influence the robot's behavior</p>
+      <p>The first step was getting reliable human detections from the ZED 2i. The camera tracked bodies and produced skeletons and bounding boxes, which let the system estimate where people were and how their posture changed the robot's behavior.</p>
       <p>Once the detections were flowing in, the next step was turning them into something more useful than a raw point in space. I used the tracked skeleton keypoints to classify posture and estimate more than just position. That let the system distinguish between someone who was standing still, walking, sitting, or lying down, which matters a lot when you are trying to decide how aggressively the robot should give space.</p>
       <figure class="media-figure">
         <video class="media-video" controls muted loop playsinline preload="metadata" data-autoplay-on-scroll>
@@ -68,7 +66,7 @@
         </video>
         <figcaption>Raw RGB converted to specific skeleton markers and finally into a posture output.</figcaption>
       </figure>
-      <p>Detecting posture of the humans around the robot allows the robot to dynamically give a different amount of space to different people by identifying their intent. You want to give more space to somebody who is walking and carrying something heavy than somebody who is sitting and working on a tablet.</p>
+      <p>By detecting nearby people's posture, the robot could give different amounts of space based on what they were doing. You want to give more space to somebody who is walking and carrying something heavy than somebody who is sitting and working on a tablet.</p>
     </section>
 
     <section class="story-section">
@@ -118,10 +116,16 @@
     <section class="story-section">
       <h2>Challenges and next steps</h2>
       <p>While the deployment successfully demonstrated proactive yielding, a real-world system can fail for reasons that seem small until they are suddenly very important. Working on the physical robot highlighted that the sensor stack has inherent blind spots and that manual parameter tuning for every edge-case scenario is not scalable.</p>
-      <p>Future iterations should focus on two-way human-robot communication so the robot can signal intent as clearly as it tries to infer it. Additionally, implementing more nuanced pedestrian modeling, such as identifying if someone is moving through a constrained space, would allow the clearance strategy to dynamically adapt, making the system feel human-aware in a much deeper way.</p>
+      <p>The next step is better two-way communication so the robot can signal its intent as clearly as it infers other people’s. I’d also want more nuanced pedestrian modeling, especially in tight spaces, so the clearance strategy can respond more naturally.</p>
     </section>
 
-    <footer class="footer"> <a href="index.html">Back to home</a>.</footer>
+    <footer class="footer footer-contact">
+      <a href="index.html">Back to home</a>
+      <span class="footer-links">
+        <a href="mailto:zaraiusbillimoria@gmail.com">zaraiusbillimoria@gmail.com</a>
+        <a href="https://www.linkedin.com/in/zaraius-bilimoria" target="_blank" rel="noopener">LinkedIn</a>
+      </span>
+    </footer>
   </main>
 </body>
 </html>
