@@ -3,13 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DinkDonk | RL Pickleball</title>
+  <title>DinkDonk | RL Pickleball | Zaraius Bilimoria</title>
+  <meta name="description" content="DinkDonk, a Unity ML-Agents reinforcement learning environment for pickleball serve, return, and multi-agent rally experiments.">
+  <meta name="author" content="Zaraius Bilimoria">
+  <meta property="og:title" content="DinkDonk | Reinforcement Learning Pickleball | Zaraius Bilimoria">
+  <meta property="og:description" content="Unity ML-Agents environment exploring PPO, reward shaping, self-play, and reward-hacking failure modes.">
+  <meta property="og:type" content="article">
+  <meta name="twitter:card" content="summary">
   <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.tailwindcss.com"></script>
   <script src="scripts/autoplay-on-scroll.js" defer></script>
   <script src="scripts/media-links.js" defer></script>
 </head>
-<body class="bg-slate-50 text-slate-950">
+<body>
   <header class="header">
     <nav class="navbar page">
       <a class="brand" href="index.html">Zaraius</a>
@@ -51,7 +56,7 @@
         <li>Training pipeline uses PPO (ML-Agents) with configurable dense rewards during early exploration.</li>
       </ul>
       <figure class="media-figure">
-        <img src="media/rl_pickleball_environment.png" alt="Unity ML-Agents pickleball environment">
+        <img src="media/rl_pickleball_environment.png" alt="Unity ML-Agents pickleball environment" width="1700" height="1036" loading="lazy">
         <figcaption>Unity environment setup with player agents, paddles, ball, net, court, and walls.</figcaption>
       </figure>
     </section>
@@ -67,7 +72,7 @@
       </ul>
       <p>This cycle repeated throughout the project: reward design, unexpected exploit, diagnosis, then targeted penalty or reward modification.</p>
       <figure class="media-figure compact-media">
-        <img src="media/rl_pickleball_rewards.png" alt="DinkDonk reward and penalty table">
+        <img src="media/rl_pickleball_rewards.png" alt="DinkDonk reward and penalty table" width="808" height="612" loading="lazy">
         <figcaption>Final reward and penalty structure after removing the biggest reward exploits.</figcaption>
       </figure>
     </section>

@@ -3,13 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Neato Fleet | Multi-Robot Collision Avoidance</title>
+  <title>Neato Fleet | Zaraius Bilimoria</title>
+  <meta name="description" content="A ROS 2 multi-robot coordination project using RVO2 to route three differential-drive Neatos around obstacles.">
+  <meta name="author" content="Zaraius Bilimoria">
+  <meta property="og:title" content="Neato Fleet | Multi-Robot Collision Avoidance | Zaraius Bilimoria">
+  <meta property="og:description" content="ROS 2 fleet control, RVO2 collision avoidance, Gazebo simulation, and sim-to-real trajectory playback.">
+  <meta property="og:type" content="article">
+  <meta name="twitter:card" content="summary">
   <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.tailwindcss.com"></script>
   <script src="scripts/autoplay-on-scroll.js" defer></script>
   <script src="scripts/media-links.js" defer></script>
 </head>
-<body class="bg-slate-50 text-slate-950">
+<body>
   <header class="header">
     <nav class="navbar page">
       <a class="brand" href="index.html">Zaraius</a>
@@ -25,7 +30,7 @@
   <main class="page">
     <section class="detail-hero">
       <p class="eyebrow">Computational Robotics Final Group Project</p>
-      <h1>Neato Fleet</h1>
+      <h1>Neatofleet</h1>
       <p class="lead">I built a ROS 2 multi-robot coordination system that uses RVO2 to route three Neatos around each other.</p>
 
       <div class="media-pair neato-hero-media">
@@ -66,11 +71,11 @@
       <p>We selected Reciprocal Velocity Obstacles (RVO2) because it gives each robot a local rule for choosing a safe velocity around nearby moving agents. Our implementation used <a href="https://github.com/sybrenstuvel/Python-RVO2" target="_blank" rel="noopener">Python-RVO2</a>, a Python binding of the standard RVO2 library, based on the paper <a href="https://www.researchgate.net/publication/221073351_Reciprocal_Velocity_Obstacles_for_Real-Time_Multi-agent_Navigation" target="_blank" rel="noopener">"Reciprocal Velocity Obstacles for Real-Time Multi-Agent Navigation"</a> by van den Berg et al.</p>
       <div class="media-pair">
         <div class="pair-item">
-          <img src="media/neato_fleet_rvo2_paper_figure.jpg" alt="RVO2 paper figure showing reciprocal velocity obstacle geometry">
+          <img src="media/neato_fleet_rvo2_paper_figure.jpg" alt="RVO2 paper figure showing reciprocal velocity obstacle geometry" width="640" height="400" loading="lazy">
           <div class="pair-caption">The core idea: each agent adjusts velocity while sharing responsibility for avoiding collisions.</div>
         </div>
         <div class="pair-item">
-          <img src="media/rvo_example.jpeg" alt="Four simulated RVO2 agents crossing in a plus formation">
+          <img src="media/rvo_example.jpeg" alt="Four simulated RVO2 agents crossing in a plus formation" width="1401" height="609" loading="lazy">
           <div class="pair-caption">Our Python-RVO2 simulation with four agents crossing in a plus formation while avoiding each other.</div>
         </div>
       </div>
@@ -126,7 +131,7 @@
       <ul>
         <li>Successfully coordinated three Neatos in simulation using RVO2 for multi-robot swaps and obstacle avoidance.</li>
         <li>Transferred trajectories to physical robots with timestamped playback; reliable for short maneuvers of about 30 seconds before wheel slip accumulated.</li>
-        <li>Delivered a clear engineering lesson: correctness on paper does not guarantee correctness on hardware. Instrumentation and architecture changes were required.</li>
+        <li>Simulation validated the planner, but wheel slip and network latency prevented reliable closed-loop control on the Neatos. We switched to short timestamped playback and got reliable maneuvers for about 30 seconds.</li>
       </ul>
     </section>
 
@@ -138,28 +143,16 @@
       </div>
       <div class="minimal-list">
         <div class="minimal-row">
-          <strong>Sensing assumptions</strong>
-          <p>The theoretical guarantees depend on accurate relative position and velocity data. Wheel slip and encoder drift made the Neatos' onboard estimates diverge from reality.</p>
+          <strong>Sensing & state estimation</strong>
+          <p>Encoder drift, wheel slip, and Wi-Fi latency broke the relative-state assumptions RVO2 relies on, so we recorded simulation trajectories and replayed them on hardware.</p>
         </div>
         <div class="minimal-row">
-          <strong>Robot motion limits</strong>
-          <p>RVO2 treats agents as holonomic, but the Neatos are differential-drive robots. The heading controller introduced tracking error when converting ideal velocities into feasible commands.</p>
+          <strong>Differential-drive constraints</strong>
+          <p>RVO2 assumes holonomic motion; converting its (vx, vy) outputs to differential-drive <code>Twist</code> introduced tracking error and limited closed-loop performance.</p>
         </div>
         <div class="minimal-row">
-          <strong>Local planning only</strong>
-          <p>RVO2 is reactive. It works well for local avoidance, but complex environments can still require a global planner to avoid deadlocks or obstacle traps.</p>
-        </div>
-        <div class="minimal-row">
-          <strong>Future localization</strong>
-          <p>An overhead AprilTag or OptiTrack setup would let the system close the loop in real time instead of relying on open-loop replay.</p>
-        </div>
-        <div class="minimal-row">
-          <strong>Lower-latency control</strong>
-          <p>Moving more computation onto the robots could reduce Wi-Fi latency and make the relative-state updates more useful.</p>
-        </div>
-        <div class="minimal-row">
-          <strong>Dynamic obstacles</strong>
-          <p>LiDAR-based obstacle injection would let the solver react to unmapped objects, including people moving through the test space.</p>
+          <strong>Perception & low-latency control</strong>
+          <p>Without low-latency global localization or onboard processing for dynamic obstacles, closing the loop in real time was unreliable—an overhead tracking system or moving computation onboard would help.</p>
         </div>
       </div>
     </section>

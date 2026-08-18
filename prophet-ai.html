@@ -3,13 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Prophet AI</title>
+  <title>Prophet AI | Zaraius Bilimoria</title>
+  <meta name="description" content="Zaraius Bilimoria's computer vision and embedded systems internship work building poultry health monitoring with edge cameras.">
+  <meta name="author" content="Zaraius Bilimoria">
+  <meta property="og:title" content="Poultry Health Monitoring with Computer Vision | Zaraius Bilimoria">
+  <meta property="og:description" content="Computer vision, Raspberry Pi camera hardware, motion filtering, dynamic masking, tracking, and synthetic data for poultry monitoring.">
+  <meta property="og:type" content="article">
+  <meta name="twitter:card" content="summary">
   <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.tailwindcss.com"></script>
   <script src="scripts/autoplay-on-scroll.js" defer></script>
   <script src="scripts/media-links.js" defer></script>
 </head>
-<body class="bg-slate-50 text-slate-950">
+<body>
   <header class="header">
     <nav class="navbar page">
       <a class="brand" href="index.html">Zaraius</a>
@@ -25,7 +30,7 @@
     <section class="detail-hero">
       <p class="eyebrow">Computer Vision and Embedded Systems Intern, Summer 2025</p>
       <h1>Prophet AI</h1>
-      <p class="lead">I joined Prophet AI as its first employee and helped turn a prototype into a practical system. I scaled the deployment from a small pilot to a much larger rollout, reduced compute cost, and improved accuracy. We monitored poultry health by installing cameras in barns and tracking each bird’s activity with a custom detector and a Kalman-filter-based tracker. A chicken’s health is closely tied to its activity level, so we could catch early illness signs at a scale farmers could not manually. </p>
+      <p class="lead">I joined Prophet AI as its first employee and helped turn a prototype into a practical system. I scaled the deployment from a pilot of 100 bird facilities to a 1000 bird facility, increased inference speed from 220 to 3,000 FPS, reduced compute load by 75%, and improved our detection accuracy of F1 from 0.89 to 0.99. We monitored poultry health by installing cameras in barns and tracking each bird's activity with a custom detector and a Kalman-filter-based tracker. A chicken's health is closely tied to its activity level, so we could catch early illness signs at a scale farmers could not manually. </p>
     </section>
 
     <section class="story-section">
@@ -44,8 +49,8 @@
       <h2>From hardware to deployment</h2>
       <p>Instead of relying on expensive IP cameras, I prototyped a system using Raspberry Pi 4s with USB cameras and custom 3D-printed mounts. This reduced per-unit cost and made installations repeatable. We intentionally avoided features we didn't need to favor stable, consistent viewpoints across many fixtures.</p>
       <div class="media-pair">
-        <div class="pair-item"><img src="media/camera_system.png" alt="Camera mount"><div class="pair-caption">Raspberry Pi and Camera setup</div></div>
-        <div class="pair-item"><img class="cad-mount-image" src="media/camera_cad_model.png" alt="CAD view"><div class="pair-caption">CAD of camera mount</div></div>
+        <div class="pair-item"><img src="media/camera_system.png" alt="Raspberry Pi and USB camera setup" width="719" height="346" loading="lazy"><div class="pair-caption">Raspberry Pi and camera setup</div></div>
+        <div class="pair-item"><img class="cad-mount-image" src="media/camera_cad_model.png" alt="CAD model of the camera mount" width="412" height="334" loading="lazy"><div class="pair-caption">CAD of camera mount</div></div>
       </div>
     </section>
 
@@ -53,19 +58,19 @@
 
     <section class="story-section">
       <h2>Improving labels with dynamic masking</h2>
-      <p>Partial objects at the frame edges caused inconsistent annotations. To reduce incorrect labels, I introduced a dynamic mask per camera which defines which area is owned by a camera and ignores ambiguous edge detections. Cleaner training data improved the F1 score from 0.94 to 0.98.</p>
+      <p>Partial objects at the frame edges caused inconsistent annotations. To reduce incorrect labels, I introduced a per-camera mask that defines which area is owned by a camera and ignores ambiguous edge detections. Cleaner training data improved the F1 score from 0.94 to 0.98.</p>
       <div class="media-pair">
-        <div class="pair-item"><img src="media/unmasked_chicken.png" alt="Original frame"><div class="pair-caption">Original image</div></div>
-        <div class="pair-item"><img src="media/masked_chicken.png" alt="Masked frame"><div class="pair-caption">Masked image</div></div>
+        <div class="pair-item"><img src="media/unmasked_chicken.png" alt="Chicken frame before camera masking" width="538" height="411" loading="lazy"><div class="pair-caption">Original image</div></div>
+        <div class="pair-item"><img src="media/masked_chicken.png" alt="Chicken frame after camera masking" width="517" height="390" loading="lazy"><div class="pair-caption">Masked image</div></div>
       </div>
     </section>
 
     <section class="story-section">
       <h2>Synthetic data and simulation</h2>
-      <p>To generate more training data and capture rare or difficult scenarios without more physical cameras, I wrote a pipeline to project 2D annotations into a 3D Unity scene and render synthetic frames. This let us recreate the real data in a Unity digital twin, generate new scenarios with different lighting, density, and occlusion, and improve the model’s robustness</p>
+      <p>To generate more training data and capture rare or difficult scenarios without more physical cameras, I wrote a pipeline to project 2D annotations into a 3D Unity scene and render synthetic frames. This let us recreate the real data in a Unity digital twin, generate new scenarios with different lighting, density, and occlusion, and improve the model's robustness.</p>
       <div class="media-pair">
-        <div class="pair-item"><img src="media/real_chicken.png" alt="Real frame"><div class="pair-caption">Real frame</div></div>
-        <div class="pair-item"><img src="media/simulation_chicken.png" alt="Simulation frame"><div class="pair-caption">Unity simulation</div></div>
+        <div class="pair-item"><img src="media/real_chicken.png" alt="Real poultry camera frame" width="583" height="430" loading="lazy"><div class="pair-caption">Real frame</div></div>
+        <div class="pair-item"><img src="media/simulation_chicken.png" alt="Synthetic Unity poultry frame" width="583" height="430" loading="lazy"><div class="pair-caption">Unity simulation</div></div>
       </div>
     </section>
 <!-- 

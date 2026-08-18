@@ -3,12 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfolio | Home</title>
+  <title>Zaraius Bilimoria | Robotics Engineering Portfolio</title>
+  <meta name="description" content="Zaraius Bilimoria is a robotics engineering student at Olin College building perception, motion planning, embedded systems, and human-aware robotics.">
+  <meta name="author" content="Zaraius Bilimoria">
+  <meta property="og:title" content="Zaraius Bilimoria | Robotics Engineering Portfolio">
+  <meta property="og:description" content="Robotics engineering projects in perception, motion planning, embedded systems, and human-aware navigation.">
+  <meta property="og:type" content="profile">
+  <meta name="twitter:card" content="summary">
   <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.tailwindcss.com"></script>
   <script src="scripts/media-links.js" defer></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    "mainEntity": {
+      "@type": "Person",
+      "name": "Zaraius Bilimoria",
+      "jobTitle": "Robotics Engineering Student",
+      "description": "Robotics engineering student building perception, motion planning, embedded systems, and human-aware robotics.",
+      "sameAs": [
+        "https://github.com/Zaraius",
+        "https://www.linkedin.com/in/zaraius-bilimoria"
+      ]
+    }
+  }
+  </script>
 </head>
-<body class="bg-slate-50 text-slate-950">
+<body>
   <header class="header">
     <nav class="navbar page">
       <a class="brand" href="index.html">Zaraius</a>
@@ -25,11 +46,11 @@
 <section class="hero">
   <div class="hero-copy">
     <h1>Zaraius Bilimoria.</h1>
-    <p class="hero-lead">I'm a robotics engineering student at Olin College of Engineering, and I've been fascinated by robotics since fifth grade. I love the feeling of writing code and seeing a physical system move. After helping lead my FRC team to a second-place finish at the world championship, I'm now interested in robotics and embedded systems as well as how these systems should interact around humans.</p>
+    <p class="hero-lead">I'm a robotics engineering student at Olin College of Engineering. I build systems that connect software to the physical world, from perception and motion planning to embedded control. My love for robotics started in fifth grade, and I now focus on robotics, embedded systems, and how robots should behave around people.</p>
   </div>
 
   <figure class="hero-portrait">
-    <img src="media/ZaraiusPortrait.jpeg" alt="Portrait of Zaraius">
+    <img src="media/ZaraiusPortrait.jpeg" alt="Portrait of Zaraius" width="385" height="586" loading="eager" fetchpriority="high">
   </figure>
 </section>
 
@@ -63,7 +84,7 @@
 <section id="projects" class="section">
   <h2>Personal Projects</h2>
   <div class="grid">
-    <a class="card" href="pie.html" style="--card-bg-image: url('media/background_images/background_pie.png'); --card-gradient: linear-gradient(160deg, rgba(255,255,255,0.46), rgba(7,20,38,0.48)); --card-position: center;">
+    <a class="card" href="luggage-carrying.html" style="--card-bg-image: url('media/background_images/background_pie.png'); --card-gradient: linear-gradient(160deg, rgba(255,255,255,0.46), rgba(7,20,38,0.48)); --card-position: center;">
       <div class="card-image">
         <span>Luggage-carrying robot</span>
         <div class="card-overlay">
@@ -131,10 +152,10 @@
     </a>
     <a class="card" href="gradient-descent.html" style="--card-bg-image: url('media/background_images/background_gradient_descent.png'); --card-gradient: linear-gradient(160deg, rgba(255,255,255,0.52), rgba(7,20,38,0.42)); --card-position: center;">
       <div class="card-image">
-        <span>Gradient Descent app</span>
+        <span>Gradient Descent App</span>
         <div class="card-overlay">
           <div>
-            <h3 class="card-title">Gradient Descent app</h3>
+            <h3 class="card-title">Gradient Descent App</h3>
             <p class="card-text">Interactive MATLAB path planner with soft obstacle penalties and an A* benchmark.</p>
           </div>
         </div>

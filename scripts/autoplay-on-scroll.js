@@ -27,6 +27,11 @@
     }
   };
 
+  const pauseForViewport = (video) => {
+    video.dataset.viewportPaused = "true";
+    video.pause();
+  };
+
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     videos.forEach((video) => {
       video.controls = true;
@@ -47,7 +52,7 @@
         if (entry.isIntersecting) {
           play(video);
         } else {
-          video.pause();
+          pauseForViewport(video);
         }
       });
     },
@@ -59,6 +64,19 @@
 
   videos.forEach((video) => {
     prepareForAutoplay(video);
+    video.addEventListener("pause", () => {
+      if (video.dataset.viewportPaused === "true") {
+        delete video.dataset.viewportPaused;
+        return;
+      }
+
+      if (!video.ended) {
+        video.dataset.userPaused = "true";
+      }
+    });
+    video.addEventListener("play", () => {
+      delete video.dataset.userPaused;
+    });
     observer.observe(video);
   });
 })();

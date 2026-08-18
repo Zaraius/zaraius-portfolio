@@ -3,13 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Basketball Tracker | 3D trajectory from video</title>
+  <title>Basketball Tracker | Zaraius Bilimoria</title>
+  <meta name="description" content="A computer vision project estimating basketball 3D trajectory, velocity, and acceleration from monocular iPhone video.">
+  <meta name="author" content="Zaraius Bilimoria">
+  <meta property="og:title" content="Basketball Tracker | Zaraius Bilimoria">
+  <meta property="og:description" content="Computer vision pipeline for basketball detection, monocular depth calibration, and trajectory estimation.">
+  <meta property="og:type" content="article">
+  <meta name="twitter:card" content="summary">
   <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.tailwindcss.com"></script>
   <script src="scripts/media-links.js" defer></script>
   <script src="scripts/autoplay-on-scroll.js" defer></script>
 </head>
-<body class="bg-slate-50 text-slate-950">
+<body>
   <header class="header">
     <nav class="navbar page">
       <a class="brand" href="index.html">Zaraius</a>
@@ -39,7 +44,7 @@
 
     <section class="story-section">
       <h2>Overview</h2>
-      <p>Recovered approximate 3D position, velocity, and acceleration from monocular iPhone footage by combining object detection (YOLO) with geometric refinement (Hough Circle) and a pixel-diameter-to-depth calibration curve. The goal was projective recovery of ball kinematics to assess shot trajectories.</p>
+      <p>I recovered approximate 3D position, velocity, and acceleration from monocular iPhone footage by combining object detection (YOLO) with geometric refinement (Hough Circle) and a pixel-diameter-to-depth calibration curve. The goal was projective recovery of ball kinematics to assess shot trajectories.</p>
     </section>
 
     <section class="story-section">
@@ -47,24 +52,24 @@
       <ul>
         <li>Started with HSV/color segmentation, which failed under changing lighting and scene conditions.</li>
         <li>Trained a <strong>YOLOv11n</strong> detector on basketball images; iteratively generated and corrected frames to improve performance on distant and partially occluded balls.</li>
-        <li>Used Hough Circle Transform to refine center & diameter estimates because bounding boxes alone were too loose for geometric depth estimation.</li>
+        <li>Used Hough Circle Transform to refine center and diameter estimates because bounding boxes alone were too loose for geometric depth estimation.</li>
       </ul>
       <figure class="media-figure compact-media">
-        <img src="media/basketball_tracker_yolo.png" alt="YOLO basketball detector training result">
+        <img src="media/basketball_tracker_yolo.png" alt="YOLO basketball detector training result" width="249" height="268" loading="lazy">
         <figcaption>YOLOv11n detector output after iteratively generating and correcting basketball frames.</figcaption>
       </figure>
     </section>
 
     <section class="story-section">
       <h2>Depth calibration & 3D pipeline</h2>
-      <p>ArUco tags were attempted and proved unreliable; the final approach used the apparent basketball diameter in pixels with a calibration curve to estimate depth. We photographed the ball at a fixed x/y position every foot across the usable range, measured the real depth for each frame, and compared it against the detected basketball diameter in pixels. Combined with YOLO/Hough x,y, this produced per-frame x,y,z positions that could be converted into trajectories, velocities, and accelerations.</p>
+      <p>We first tried ArUco tags but they were unreliabled in our setup so we switched to basketball diameter calibration diameter in pixels with a calibration curve to estimate depth. We photographed the ball at a fixed x/y position every foot across the usable range, measured the real depth for each frame, and compared it against the detected basketball diameter in pixels. Combined with YOLO/Hough x,y, this produced per-frame x,y,z positions that could be converted into trajectories, velocities, and accelerations.</p>
       <div class="media-pair">
         <div class="pair-item">
-          <img src="media/11ft_processed.jpg" alt="Processed basketball frame at eleven feet">
+          <img src="media/11ft_processed.jpg" alt="Processed basketball frame at eleven feet" width="1600" height="1200" loading="lazy">
           <div class="pair-caption">Processed calibration frame at a known depth.</div>
         </div>
         <div class="pair-item diagram-panel">
-          <img src="media/basketball_tracker_calibration.png" alt="Basketball pixel diameter to depth calibration curve">
+          <img src="media/basketball_tracker_calibration.png" alt="Basketball pixel diameter to depth calibration curve" width="852" height="549" loading="lazy">
           <div class="pair-caption">Pixel-diameter-to-depth calibration built from one-foot interval images.</div>
         </div>
       </div>
