@@ -32,7 +32,7 @@
       <h1>HITT Contracting</h1>
       <p class="lead">I developed and deployed a human-aware social-navigation layer for Boston Dynamics Spot. It combined real-time human tracking with motion planning to adjust trajectories around moving pedestrians.</p>
       <figure class="media-figure">
-        <img src="media/ZaraiusWithSpot.jpeg" alt="Zaraius Bilimoria kneeling beside Boston Dynamics Spot at a HITT Contracting construction site" width="1600" height="1200" loading="eager" fetchpriority="high">
+        <img src="media/ZaraiusWithSpot.jpeg" alt="The author with Spot at HITT Contracting" width="1600" height="1200" loading="eager" fetchpriority="high">
       </figure>
     </section>
 
@@ -41,6 +41,7 @@
       <p>Construction sites are hard for autonomous robots. People move unpredictably, layouts change constantly, and standard obstacle avoidance often reacts too late. During my internship at HITT Contracting, I built a social-navigation layer for Boston Dynamics Spot that combined human perception, tracking, and motion planning to make the robot respond more naturally around people. I ran the containerized ROS 2 pipeline on a Jetson Orin AGX with a ZED 2i camera and an Ouster LiDAR. The pipeline fed skeleton tracking into a custom Nav2 MPPI critic, which adjusted the robot's trajectory and yielded to pedestrians in dynamic environments.</p>
     </section>
 
+<!--  -->
 
     <section class="story-section">
       <h2>Human Perception</h2>
@@ -59,9 +60,6 @@
     <section class="story-section">
       <h2>Building a custom MPPI critic</h2>
       <p>To translate perception into action, I wrote a custom Nav2 MPPI critic. Instead of treating people as static obstacles in a standard costmap, the system scores candidate trajectories based on predicted human motion. For walking people, that meant using motion information to predict future positions; for more static cases, it meant building cost fields around the person's current location so the robot would avoid moving straight toward them.</p>
-        <img class="social-critic-figure" src="media/SocialCritic_walking_horizon.png" alt="Plot of cumulative Nav2 SocialCritic cost as a person walks toward the robot" width="700" height="600" loading="lazy">
-      </figure>
-      <figcaption>The cumulative cost from a person walking towards the robot head-on. </figcaption> -->
     </section>
 
     <section class="story-section">
@@ -96,6 +94,7 @@
           <figcaption>With the social critic</figcaption>
         </figure>
       </div>
+      <!-- <p>That difference mattered because it made the system feel more intentional and less abrupt. The robot was not just avoiding a person; it was demonstrating that it understood the interaction was happening.</p> -->
     </section>
 
     <section class="story-section">
