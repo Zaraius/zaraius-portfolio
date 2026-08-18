@@ -1,0 +1,25 @@
+# Zaraius Bilimoria
+
+> Robotics engineering portfolio focused on perception, motion planning, embedded systems, and human-aware robotics.
+
+## Important pages
+
+- https://zaraius.github.io/ — Portfolio homepage and project index
+- https://zaraius.github.io/resume.html — Current robotics engineering resume
+- https://zaraius.github.io/hitt-contracting.html — Human-aware social navigation for Boston Dynamics Spot
+- https://zaraius.github.io/prophet-ai.html — Poultry health monitoring with computer vision and edge cameras
+- https://zaraius.github.io/luggage-carrying.html — Project AURA autonomous assistive cart
+- https://zaraius.github.io/neatofleet.html — ROS 2 multi-robot coordination with RVO2
+- https://zaraius.github.io/rl_pickleball.html — DinkDonk reinforcement-learning pickleball environment
+- https://zaraius.github.io/rl_snake.html — Deep Q-Learning Snake reproduction and improvements
+- https://zaraius.github.io/basketball-tracker.html — Monocular basketball trajectory estimation
+- https://zaraius.github.io/gradient-descent.html — MATLAB gradient-descent path planner
+- https://zaraius.github.io/muteify.html — C and Linux Spotify ad-muting utility
+
+## Identity
+
+- Name: Zaraius Bilimoria
+- Role: Robotics engineering student
+- School: Olin College of Engineering
+- GitHub: https://github.com/Zaraius
+- LinkedIn: https://www.linkedin.com/in/zaraius-bilimoria
