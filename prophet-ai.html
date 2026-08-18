@@ -30,18 +30,18 @@
     <section class="detail-hero">
       <p class="eyebrow">Computer Vision and Embedded Systems Intern, Summer 2025</p>
       <h1>Prophet AI</h1>
-      <p class="lead">I joined Prophet AI as its first employee and helped turn a prototype into a practical system. I scaled the deployment from a pilot of 100 bird facilities to a 1000 bird facility, increased inference speed from 220 to 3,000 FPS, reduced compute load by 75%, and improved our detection accuracy of F1 from 0.89 to 0.99. We monitored poultry health by installing cameras in barns and tracking each bird's activity with a custom detector and a Kalman-filter-based tracker. A chicken's health is closely tied to its activity level, so we could catch early illness signs at a scale farmers could not manually. </p>
+      <p class="lead">I joined Prophet AI as its first employee and helped turn a prototype into a deployable system. I scaled the deployment from a pilot covering 100 bird facilities to a 1,000-bird facility, increased inference speed from 220 to 3,000 FPS, reduced compute load by 75%, and improved detector F1 from 0.89 to 0.99. We monitored poultry health with barn cameras, a custom detector, and a Kalman-filter tracker for each bird's activity. Activity gave us an early signal of illness at a scale farmers could not monitor manually.</p>
     </section>
 
     <section class="story-section">
       <h2>Shrinking compute with pixel differencing</h2>
-      <p>Running inference on every single frame wastes compute because chickens are mainly static. I implemented a pixel-differencing pre-filter that isolates moving regions and only sends those crops to the detector. This reduced the number of frames requiring detection by about 75%, lowering CPU and bandwidth usage and making edge deployments practical.</p>
+      <p>Running inference on every frame wastes compute because chickens are mainly static. I implemented a pixel-differencing pre-filter that isolates moving regions and sends only those crops to the detector. This reduced the number of frames requiring detection by about 75%, lowering CPU and bandwidth usage and making edge deployments practical.</p>
       <figure class="media-figure">
         <video class="media-video" controls muted loop playsinline preload="metadata" data-autoplay-on-scroll>
           <source src="media/frame_differencing-h264.mp4" type="video/mp4">
           Your browser does not support video playback.
         </video>
-        <figcaption>Regions with movement are fully captured while those with no movement are blacked out(blurred here for illustration purposes).</figcaption>
+        <figcaption>Regions with movement remain visible while static regions appear black. The video blurs this effect for illustration.</figcaption>
       </figure>
     </section>
 
@@ -49,8 +49,8 @@
       <h2>From hardware to deployment</h2>
       <p>Instead of relying on expensive IP cameras, I prototyped a system using Raspberry Pi 4s with USB cameras and custom 3D-printed mounts. This reduced per-unit cost and made installations repeatable. We intentionally avoided features we didn't need to favor stable, consistent viewpoints across many fixtures.</p>
       <div class="media-pair">
-        <div class="pair-item"><img src="media/camera_system.png" alt="Raspberry Pi and USB camera setup" width="719" height="346" loading="lazy"><div class="pair-caption">Raspberry Pi and camera setup</div></div>
-        <div class="pair-item"><img class="cad-mount-image" src="media/camera_cad_model.png" alt="CAD model of the camera mount" width="412" height="334" loading="lazy"><div class="pair-caption">CAD of camera mount</div></div>
+        <div class="pair-item"><img src="media/camera_system.png" alt="Prototype poultry-monitoring camera module with a Raspberry Pi, wiring, and USB camera mounted on a wooden board" width="719" height="346" loading="lazy"><div class="pair-caption">Raspberry Pi and camera setup</div></div>
+        <div class="pair-item"><img class="cad-mount-image" src="media/camera_cad_model.png" alt="CAD rendering of the 3D-printed mount for a poultry-monitoring camera" width="412" height="334" loading="lazy"><div class="pair-caption">CAD of camera mount</div></div>
       </div>
     </section>
 
@@ -60,17 +60,17 @@
       <h2>Improving labels with dynamic masking</h2>
       <p>Partial objects at the frame edges caused inconsistent annotations. To reduce incorrect labels, I introduced a per-camera mask that defines which area is owned by a camera and ignores ambiguous edge detections. Cleaner training data improved the F1 score from 0.94 to 0.98.</p>
       <div class="media-pair">
-        <div class="pair-item"><img src="media/unmasked_chicken.png" alt="Chicken frame before camera masking" width="538" height="411" loading="lazy"><div class="pair-caption">Original image</div></div>
-        <div class="pair-item"><img src="media/masked_chicken.png" alt="Chicken frame after camera masking" width="517" height="390" loading="lazy"><div class="pair-caption">Masked image</div></div>
+        <div class="pair-item"><img src="media/unmasked_chicken.png" alt="Overhead poultry-barn camera frame before per-camera masking, showing chickens across the enclosure" width="538" height="411" loading="lazy"><div class="pair-caption">Original image</div></div>
+        <div class="pair-item"><img src="media/masked_chicken.png" alt="The same overhead poultry-barn frame after per-camera masking, with the enclosure isolated against a black background" width="517" height="390" loading="lazy"><div class="pair-caption">Masked image</div></div>
       </div>
     </section>
 
     <section class="story-section">
       <h2>Synthetic data and simulation</h2>
-      <p>To generate more training data and capture rare or difficult scenarios without more physical cameras, I wrote a pipeline to project 2D annotations into a 3D Unity scene and render synthetic frames. This let us recreate the real data in a Unity digital twin, generate new scenarios with different lighting, density, and occlusion, and improve the model's robustness.</p>
+      <p>To generate more training data and capture rare or difficult scenarios without more physical cameras, I wrote a pipeline to project 2D annotations into a 3D Unity scene and render synthetic frames. This let us recreate the real data in a Unity digital twin, generate scenarios with different lighting, density, and occlusion, and help the model handle those changes.</p>
       <div class="media-pair">
-        <div class="pair-item"><img src="media/real_chicken.png" alt="Real poultry camera frame" width="583" height="430" loading="lazy"><div class="pair-caption">Real frame</div></div>
-        <div class="pair-item"><img src="media/simulation_chicken.png" alt="Synthetic Unity poultry frame" width="583" height="430" loading="lazy"><div class="pair-caption">Unity simulation</div></div>
+        <div class="pair-item"><img src="media/real_chicken.png" alt="Real overhead poultry-barn camera frame used by the monitoring system" width="583" height="430" loading="lazy"><div class="pair-caption">Real frame</div></div>
+        <div class="pair-item"><img src="media/simulation_chicken.png" alt="Synthetic Unity poultry-barn camera frame generated for model training" width="583" height="430" loading="lazy"><div class="pair-caption">Unity simulation</div></div>
       </div>
     </section>
 <!-- 

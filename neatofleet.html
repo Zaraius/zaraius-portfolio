@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Neato Fleet | Zaraius Bilimoria</title>
+  <title>Neatofleet | Zaraius Bilimoria</title>
   <meta name="description" content="A ROS 2 multi-robot coordination project using RVO2 to route three differential-drive Neatos around obstacles.">
   <meta name="author" content="Zaraius Bilimoria">
   <meta property="og:title" content="Neato Fleet | Multi-Robot Collision Avoidance | Zaraius Bilimoria">
@@ -71,11 +71,11 @@
       <p>We selected Reciprocal Velocity Obstacles (RVO2) because it gives each robot a local rule for choosing a safe velocity around nearby moving agents. Our implementation used <a href="https://github.com/sybrenstuvel/Python-RVO2" target="_blank" rel="noopener">Python-RVO2</a>, a Python binding of the standard RVO2 library, based on the paper <a href="https://www.researchgate.net/publication/221073351_Reciprocal_Velocity_Obstacles_for_Real-Time_Multi-agent_Navigation" target="_blank" rel="noopener">"Reciprocal Velocity Obstacles for Real-Time Multi-Agent Navigation"</a> by van den Berg et al.</p>
       <div class="media-pair">
         <div class="pair-item">
-          <img src="media/neato_fleet_rvo2_paper_figure.jpg" alt="RVO2 paper figure showing reciprocal velocity obstacle geometry" width="640" height="400" loading="lazy">
+          <img src="media/neato_fleet_rvo2_paper_figure.jpg" alt="Diagram from the RVO2 paper illustrating reciprocal velocity obstacle geometry between two agents" width="640" height="400" loading="lazy">
           <div class="pair-caption">The core idea: each agent adjusts velocity while sharing responsibility for avoiding collisions.</div>
         </div>
         <div class="pair-item">
-          <img src="media/rvo_example.jpeg" alt="Four simulated RVO2 agents crossing in a plus formation" width="1401" height="609" loading="lazy">
+          <img src="media/rvo_example.jpeg" alt="Python-RVO2 simulation plot of four agents crossing in a plus formation, with colored trajectories and position graphs" width="1401" height="609" loading="lazy">
           <div class="pair-caption">Our Python-RVO2 simulation with four agents crossing in a plus formation while avoiding each other.</div>
         </div>
       </div>
@@ -130,8 +130,8 @@
       <h2>Results</h2>
       <ul>
         <li>Successfully coordinated three Neatos in simulation using RVO2 for multi-robot swaps and obstacle avoidance.</li>
-        <li>Transferred trajectories to physical robots with timestamped playback; reliable for short maneuvers of about 30 seconds before wheel slip accumulated.</li>
-        <li>Simulation validated the planner, but wheel slip and network latency prevented reliable closed-loop control on the Neatos. We switched to short timestamped playback and got reliable maneuvers for about 30 seconds.</li>
+        <li>Transferred trajectories to physical robots with timestamped playback and completed reliable maneuvers lasting about 30 seconds before wheel slip accumulated.</li>
+        <li>Simulation validated the planner, while wheel slip and network latency exposed the limits of closed-loop control on the Neatos.</li>
       </ul>
     </section>
 
@@ -139,7 +139,7 @@
       <h2>Limitations and critique</h2>
       <div class="story-callout">
         <strong>Challenge:</strong> RVO2 assumes accurate relative positions/velocities. On the Neatos, encoder drift, wheel slip, and network latency broke those assumptions.
-        <p>Rather than forcing an unreliable closed-loop system, the design changed: run RVO2 in simulation, record deterministic trajectories, and replay them on the physical robots with synchronized starts. This tradeoff validated the algorithmic behavior on hardware while acknowledging the platform's limits.</p>
+        <p>Because the Neatos could not support reliable closed-loop state estimates, we ran RVO2 in simulation, recorded deterministic trajectories, and replayed them on physical robots with synchronized starts. This preserved the planner test while exposing the platform's limits.</p>
       </div>
       <div class="minimal-list">
         <div class="minimal-row">
@@ -152,7 +152,7 @@
         </div>
         <div class="minimal-row">
           <strong>Perception & low-latency control</strong>
-          <p>Without low-latency global localization or onboard processing for dynamic obstacles, closing the loop in real time was unreliable—an overhead tracking system or moving computation onboard would help.</p>
+          <p>The system lacked low-latency global localization and onboard processing for dynamic obstacles. An overhead tracking system or onboard computation would be the next hardware change.</p>
         </div>
       </div>
     </section>

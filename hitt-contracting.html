@@ -30,40 +30,22 @@
     <section class="detail-hero">
       <p class="eyebrow">R&D Intern, Summer 2026</p>
       <h1>HITT Contracting</h1>
-      <p class="lead">I developed and deployed a human-aware social navigation layer for Boston Dynamics Spot, integrating real-time human tracking with motion planning to dynamically adjust trajectories around moving pedestrians.</p>
+      <p class="lead">I developed and deployed a human-aware social-navigation layer for Boston Dynamics Spot. It combined real-time human tracking with motion planning to adjust trajectories around moving pedestrians.</p>
       <figure class="media-figure">
-        <img src="media/ZaraiusWithSpot.jpeg" alt="The author with Spot at HITT Contracting" width="1600" height="1200" loading="eager" fetchpriority="high">
+        <img src="media/ZaraiusWithSpot.jpeg" alt="Zaraius Bilimoria kneeling beside Boston Dynamics Spot at a HITT Contracting construction site" width="1600" height="1200" loading="eager" fetchpriority="high">
       </figure>
     </section>
 
     <section class="story-section">
       <h2>Project Overview</h2>
-      <p>Construction sites are hard for autonomous robots. People move unpredictably, layouts change constantly, and standard obstacle avoidance often reacts too late. During my internship at HITT Contracting, I built a social navigation layer for Boston Dynamics Spot that combined human perception, tracking, and motion planning to make the robot respond more naturally around people. Running entirely on edge compute via a Jetson Orin AGX, I developed a containerized ROS 2 pipeline that utilized a ZED 2i camera and an Ouster LiDAR. By feeding real-time skeleton tracking into a custom Nav2 MPPI critic, the robot could proactively adjust its trajectory and yield to pedestrians in dynamic environments.</p>
-      <!-- <p>The goal was not to make Spot perfect. It was to make it behave more like a robot that understands the world around it, especially when people are close, moving, and changing the space in real time.</p> -->
+      <p>Construction sites are hard for autonomous robots. People move unpredictably, layouts change constantly, and standard obstacle avoidance often reacts too late. During my internship at HITT Contracting, I built a social-navigation layer for Boston Dynamics Spot that combined human perception, tracking, and motion planning to make the robot respond more naturally around people. I ran the containerized ROS 2 pipeline on a Jetson Orin AGX with a ZED 2i camera and an Ouster LiDAR. The pipeline fed skeleton tracking into a custom Nav2 MPPI critic, which adjusted the robot's trajectory and yielded to pedestrians in dynamic environments.</p>
     </section>
-
-    <!-- <section class="story-section"> -->
-      <!-- <h2>The social navigation stack</h2> -->
-      <!-- <p>I built the social navigation system as an add-on to Spot's existing navigation stack rather than a replacement for it. The idea was to keep the strong base navigation behavior and layer in a new sense of human-aware cost so the robot could adjust trajectories around people instead of treating them as static obstacles alone.</p> -->
-      <!-- <p>That meant combining perception, tracking, and motion planning into one pipeline: the robot had to detect people, estimate how they were moving, and then change its own planned trajectory before a conflict became unavoidable.</p> -->
-    <!-- </section> -->
-    <!-- <section class="story-section">
-      <h2>The ZED and the skeleton tracking layer</h2>
-      <p>The first step was getting reliable human detections from the ZED 2i. The camera provided body tracking, skeletons, and bounding boxes that let the system estimate where people were in the scene and how their body posture might influence the robot's behavior.</p>
-      <figure class="media-figure">/
-        <video class="media-video" controls muted loop playsinline preload="metadata" data-autoplay-on-scroll width="90%">
-          <source src="media/zed_demo.mp4" type="video/mp4">
-          Your browser does not support video playback.
-        </video>
-        <figcaption>Placeholder for a video or image of me walking while the ZED skeleton and bounding boxes are visible over the scene.</figcaption>
-      </figure>
-    </section> -->
 
 
     <section class="story-section">
       <h2>Human Perception</h2>
       <p>The first step was getting reliable human detections from the ZED 2i. The camera tracked bodies and produced skeletons and bounding boxes, which let the system estimate where people were and how their posture changed the robot's behavior.</p>
-      <p>Once the detections were flowing in, the next step was turning them into something more useful than a raw point in space. I used the tracked skeleton keypoints to classify posture and estimate more than just position. That let the system distinguish between someone who was standing still, walking, sitting, or lying down, which matters a lot when you are trying to decide how aggressively the robot should give space.</p>
+      <p>Once detections flowed in, I used tracked skeleton keypoints to classify posture and estimate more than position. The system distinguished between someone standing still, walking, sitting, or lying down. That distinction let the planner set clearance based on what the person was doing.</p>
       <figure class="media-figure">
         <video class="media-video" controls muted loop playsinline preload="metadata" data-autoplay-on-scroll>
           <source src="media/ActivityDetection_cropped.mp4" type="video/mp4">
@@ -71,16 +53,15 @@
         </video>
         <figcaption>Raw RGB converted to specific skeleton markers and finally into a posture output.</figcaption>
       </figure>
-      <p>By detecting nearby people's posture, the robot could give different amounts of space based on what they were doing. You want to give more space to somebody who is walking and carrying something heavy than somebody who is sitting and working on a tablet.</p>
+      <p>The planner could give more space to someone walking while carrying something than to someone sitting and working on a tablet.</p>
     </section>
 
     <section class="story-section">
       <h2>Building a custom MPPI critic</h2>
       <p>To translate perception into action, I wrote a custom Nav2 MPPI critic. Instead of treating people as static obstacles in a standard costmap, the system scores candidate trajectories based on predicted human motion. For walking people, that meant using motion information to predict future positions; for more static cases, it meant building cost fields around the person's current location so the robot would avoid moving straight toward them.</p>
-      <!-- <figure class="media-figure">
-        <img class="social-critic-figure" src="media/SocialCritic_walking_horizon.png" alt="Graph of the effect of the SocialCritic" width="700" height="600" loading="lazy">
+        <img class="social-critic-figure" src="media/SocialCritic_walking_horizon.png" alt="Plot of cumulative Nav2 SocialCritic cost as a person walks toward the robot" width="700" height="600" loading="lazy">
       </figure>
-      <figcaption>The culmulative cost from a person walking towards the robot head-on. </figcaption> -->
+      <figcaption>The cumulative cost from a person walking towards the robot head-on. </figcaption> -->
     </section>
 
     <section class="story-section">
@@ -115,12 +96,12 @@
           <figcaption>With the social critic</figcaption>
         </figure>
       </div>
-      <!-- <p>That difference mattered because it made the system feel more intentional and less abrupt. The robot was not just avoiding a person; it was demonstrating that it understood the interaction was happening.</p> -->
     </section>
 
     <section class="story-section">
       <h2>Challenges and next steps</h2>
-      <p>The deployment exposed two limits: the sensor stack has blind spots, and manual tuning does not scale across edge cases. I would next add clearer robot-to-person intent signaling and more nuanced pedestrian models for tight spaces. Working on the physical robot highlighted that the sensor stack has inherent blind spots and that manual parameter tuning for every edge-case scenario is not scalable.</p>
+      <p>The deployment exposed two limits: the sensor stack has blind spots, and manual tuning does not scale across edge cases.</p>
+      <p>I would next add clearer robot-to-person intent signaling and more nuanced pedestrian models for tight spaces, so the clearance strategy can respond to context instead of relying on hand-tuned cases.</p>
       <p>The next step is better two-way communication so the robot can signal its intent as clearly as it infers other people's. I'd also want more nuanced pedestrian modeling, especially in tight spaces, so the clearance strategy can respond more naturally.</p>
     </section>
 

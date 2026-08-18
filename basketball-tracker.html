@@ -55,21 +55,21 @@
         <li>Used Hough Circle Transform to refine center and diameter estimates because bounding boxes alone were too loose for geometric depth estimation.</li>
       </ul>
       <figure class="media-figure compact-media">
-        <img src="media/basketball_tracker_yolo.png" alt="YOLO basketball detector training result" width="249" height="268" loading="lazy">
+        <img src="media/basketball_tracker_yolo.png" alt="YOLOv11n basketball detector output with bounding boxes and confidence scores on an indoor court frame" width="249" height="268" loading="lazy">
         <figcaption>YOLOv11n detector output after iteratively generating and correcting basketball frames.</figcaption>
       </figure>
     </section>
 
     <section class="story-section">
       <h2>Depth calibration & 3D pipeline</h2>
-      <p>We first tried ArUco tags but they were unreliabled in our setup so we switched to basketball diameter calibration diameter in pixels with a calibration curve to estimate depth. We photographed the ball at a fixed x/y position every foot across the usable range, measured the real depth for each frame, and compared it against the detected basketball diameter in pixels. Combined with YOLO/Hough x,y, this produced per-frame x,y,z positions that could be converted into trajectories, velocities, and accelerations.</p>
+      <p>We first tried ArUco tags, but they were unreliable in our setup. We switched to a calibration curve that relates the ball's pixel diameter to its depth. We photographed the ball at a fixed x/y position every foot across the usable range, measured the real depth for each frame, and compared it with the detected pixel diameter. Combined with YOLO/Hough x,y, this produced per-frame x,y,z positions that we converted into trajectories, velocities, and accelerations.</p>
       <div class="media-pair">
         <div class="pair-item">
-          <img src="media/11ft_processed.jpg" alt="Processed basketball frame at eleven feet" width="1600" height="1200" loading="lazy">
+          <img src="media/11ft_processed.jpg" alt="Processed iPhone basketball frame at 11 feet with YOLO and Hough-circle overlays around the ball" width="1600" height="1200" loading="lazy">
           <div class="pair-caption">Processed calibration frame at a known depth.</div>
         </div>
         <div class="pair-item diagram-panel">
-          <img src="media/basketball_tracker_calibration.png" alt="Basketball pixel diameter to depth calibration curve" width="852" height="549" loading="lazy">
+          <img src="media/basketball_tracker_calibration.png" alt="Calibration plot relating basketball diameter in pixels to measured distance in feet, with an inverse-fit curve" width="852" height="549" loading="lazy">
           <div class="pair-caption">Pixel-diameter-to-depth calibration built from one-foot interval images.</div>
         </div>
       </div>

@@ -333,6 +333,7 @@ video.media-raw-link { display: block; cursor: default; }
   .media-triptych { grid-template-columns: 1fr; }
   .minimal-row { grid-template-columns: 1fr; }
   .comparison-grid { grid-template-columns: 1fr; gap: 12px; }
+  .card-overlay { opacity: 1; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -33,7 +33,7 @@
       <p class="lead">I reproduced a published Deep Q-Learning Snake agent, then improved the state representation and learning algorithm.</p>
 
       <figure class="media-figure">
-        <img src="media/snake_demo.gif" alt="Snake agent reaching a score of 98" width="204" height="198" loading="eager">
+        <img src="media/snake_demo.gif" alt="Animated Snake reinforcement-learning agent navigating toward food and reaching a score of 98" width="204" height="198" loading="eager">
         <figcaption>Demo of the snake agent reaching a score of 98.</figcaption>
       </figure>
 
@@ -59,7 +59,7 @@
       <h2>Baseline reproduction</h2>
       <p>The original state representation used 11 binary-style inputs: immediate danger, food direction, and current movement direction. It was enough to learn basic food-seeking, but it did not let the agent reason about its own body, distant walls, or whether a move would trap it later.</p>
       <figure class="media-figure compact-media">
-        <img src="media/rl_snake_11_binary_values.png" alt="Original eleven-value Snake state representation" width="364" height="285" loading="lazy">
+        <img src="media/rl_snake_11_binary_values.png" alt="Diagram of the original 11-value Snake state representation, including danger, food direction, and movement direction" width="364" height="285" loading="lazy">
         <figcaption>Eleven input values originally suggested by the paper.</figcaption>
       </figure>
     </section>
@@ -69,15 +69,15 @@
       <p>The baseline got visibly better over time, but its weakness stayed the same: as the snake grew, it would loop, corner itself, or take moves that looked good one step ahead and were fatal a few steps later. That is where I stopped strictly following the paper and expanded the state with raycasting and bounded BFS reachability.</p>
       <div class="media-triptych">
         <figure class="media-figure">
-          <img src="media/original_100epoch.gif" alt="Snake baseline after 100 epochs" width="196" height="198" loading="lazy">
+          <img src="media/original_100epoch.gif" alt="Animated baseline Snake agent after 100 training epochs, showing early food-seeking and looping" width="196" height="198" loading="lazy">
           <figcaption>100 epochs: early food-seeking, lots of looping.</figcaption>
         </figure>
         <figure class="media-figure">
-          <img src="media/original_250epoch.gif" alt="Snake baseline after 250 epochs" width="196" height="198" loading="lazy">
+          <img src="media/original_250epoch.gif" alt="Animated baseline Snake agent after 250 training epochs, collecting food while remaining brittle around its body" width="196" height="198" loading="lazy">
           <figcaption>250 epochs: better collection, still brittle around its body.</figcaption>
         </figure>
         <figure class="media-figure">
-          <img src="media/original_500epoch.gif" alt="Snake baseline after 500 epochs" width="196" height="198" loading="lazy">
+          <img src="media/original_500epoch.gif" alt="Animated baseline Snake agent after 500 training epochs, performing well in open space but still self-trapping" width="196" height="198" loading="lazy">
           <figcaption>500 epochs: strong in open space, still prone to self-trapping.</figcaption>
         </figure>
       </div>

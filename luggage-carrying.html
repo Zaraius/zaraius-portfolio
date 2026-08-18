@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project AURA | Zaraius Bilimoria</title>
+  <meta name="description" content="Project AURA, an autonomous assistive cart built with ROS 2, RealSense perception, motor control, and human following.">
+  <meta name="author" content="Zaraius Bilimoria">
+  <meta property="og:title" content="Project AURA | Autonomous Assistive Cart | Zaraius Bilimoria">
+  <meta property="og:description" content="ROS 2 software architecture, depth perception, drivetrain control, and human following on a physical assistive cart.">
+  <meta property="og:type" content="article">
+  <meta name="twitter:card" content="summary">
+  <link rel="stylesheet" href="style.css">
+  <script src="scripts/autoplay-on-scroll.js" defer></script>
+  <script src="scripts/media-links.js" defer></script>
+</head>
+<body>
+  <header class="header">
+    <nav class="navbar page">
+      <a class="brand" href="index.html">Zaraius</a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="index.html#work-experience">Work Experience</a>
+        <a href="index.html#projects">Projects</a>
+        <a href="media/ZaraiusBilimoria%20Resume.pdf" target="_blank" rel="noopener">Resume</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="detail-hero">
+      <p class="eyebrow">Principles of Integrated Engineering Final Group Project</p>
+      <h1>Project AURA: Luggage-carrying Robot</h1>
+      <p class="lead">I developed ROS 2 software architecture and robotics integration for an autonomous assistive cart.</p>
+      <figure class="media-figure">
+        <video class="media-video" controls playsinline preload="metadata" poster="media/AURADemo-poster.jpg">
+          <source src="media/AURADemo.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </figure>
+      <p class="story-meta">This was a team project at Olin College. My primary contributions were ROS 2 architecture, motor and encoder control, depth perception, and manual/autonomous behavior integration.</p>
+    </section>
+
+    <section class="story-section">
+      <h2>My contributions</h2>
+      <h3>ROS 2 architecture</h3>
+      <ul>
+        <li>Architected the ROS 2 software system: modular nodes for sensors, motor control, perception, user input, and autonomous behaviors.</li>
+        <li>Defined topics and interfaces to decouple subsystems so components could be developed and tested independently.</li>
+        <li>Ensured the same hardware and software stacks supported both manual teleoperation and autonomous modes running on a Raspberry Pi.</li>
+        <li>Focused the design on modularity and extensibility so new behaviors could be added without a full redesign.</li>
+      </ul>
+      <figure class="media-figure">
+        <img src="media/softwaresystemdiagram.png" alt="Project AURA ROS 2 node diagram connecting joystick, encoders, depth camera, motor control, and person following" width="1800" height="806" loading="lazy">
+        <figcaption>High-level ROS node architecture and data flow.</figcaption>
+      </figure>
+    </section>
+
+    <section class="story-section">
+      <h2>Depth perception</h2>
+      <p>The person-tracking pipeline used the RealSense infrared stream to look for highly reflective tape. I thresholded the IR image, cleaned the mask with a morphology kernel, found contours, filtered them by minimum and maximum area, and rejected detections that failed a depth-distance check. A Kalman filter carried the tracked position through brief dropouts, which kept the cart's follow behavior from twitching when the marker was partially hidden.</p>
+      <ul>
+        <li>Integrated an Intel RealSense depth camera into the ROS 2 perception pipeline as the primary front-facing depth sensor.</li>
+        <li>Streamed depth and infrared topics into ROS 2, using depth to validate marker distance and infrared reflectivity to identify the target.</li>
+        <li>Tuned perception thresholds and transforms against live sensor data on the physical robot.</li>
+      </ul>
+      <figure class="media-figure">
+        <video class="media-video" controls muted loop playsinline preload="metadata" data-autoplay-on-scroll>
+          <source src="media/camera_tracker.mp4" type="video/mp4">
+          Your browser does not support video playback.
+        </video>
+        <figcaption>Demo of person tracking using the RealSense camera.</figcaption>
+      </figure>
+    </section>
+
+    <section class="story-section">
+      <h2>Human following</h2>
+      <p>The cart followed a reflective target by converting the camera tracker output into motion commands through the same drivetrain interface used by manual control. Indoor tests used reflective tape on a cone as a repeatable proxy target, which made it easier to tune distance, heading, and stop behavior before testing with a person.</p>
+      <figure class="media-figure portrait-media">
+        <video class="media-video" controls muted loop playsinline preload="metadata" poster="media/cone_following_indoors_poster.jpg" data-autoplay-on-scroll>
+          <source src="media/cone_following_indoors-h264.mp4" type="video/mp4">
+          Your browser does not support video playback.
+        </video>
+        <figcaption>Indoor testing of human-following behavior using reflective tape on a cone as a proxy for a person.</figcaption>
+      </figure>
+    </section>
+
+    <section class="story-section">
+      <h2>Motor, encoder, and control interface</h2>
+      <p>The software supports both joystick driving and autonomous following through one drivetrain command layer. That made hardware testing safer: we could take manual control when needed without changing the rest of the ROS graph.</p>
+      <ul>
+        <li>Implemented the ROS 2 to motor-controller interface and drivetrain command layer used by both manual and autonomous code.</li>
+        <li>Integrated wheel encoder feedback into ROS 2 and converted encoder ticks into odometry and motion estimates.</li>
+        <li>Monitored encoder feedback to validate motion and detect discrepancies between commanded and actual wheel motion.</li>
+        <li>Exposed the drivetrain control through a single ROS 2 interface so higher-level behaviors issue motion commands without hardware coupling.</li>
+      </ul>
+    </section>
+    <section class="story-section">
+      <h2>Safety & fault handling</h2>
+      <ul>
+        <li>Separated high-level behavior from low-level actuator control to limit unsafe autonomous commands.</li>
+        <li>Used command timeouts and simple stop-on-loss-of-signal semantics to prevent runaway behaviors during communication failures.</li>
+        <li>Tested failure cases on hardware to validate that stopping and emergency behaviors worked in practice.</li>
+      </ul>
+    </section>
+
+    <section class="story-section">
+      <h2>Results</h2>
+      <ul>
+        <li>Built a working ROS 2 software stack for an autonomous assistive cart deployed on real hardware.</li>
+        <li>Integrated RealSense depth perception, motor/encoder interfaces, and manual/autonomous control modes.</li>
+        <li>Demonstrated reliable short-range human-following behavior using reflective target tracking and depth validation.</li>
+        <li>Delivered a modular architecture that supports future behaviors and sensor swaps without major rewrites.</li>
+      </ul>
+    </section>
+
+    <section class="story-section">
+      <h2>Source code and website</h2>
+      <p>The full project writeup is on the <a href="https://olincollege.github.io/pie-2025-03/project-aura/" target="_blank" rel="noopener">Project AURA site</a>, and the ROS code is available on <a href="https://github.com/Zaraius/AURA/tree/main" target="_blank" rel="noopener">GitHub</a>.</p>
+    </section>
+
+    <footer class="footer footer-contact">
+      <a href="index.html">Back to home</a>
+      <span class="footer-links">
+        <a href="mailto:zaraiusbillimoria@gmail.com" target="_blank" rel="noopener noreferrer">zaraiusbillimoria@gmail.com</a>
+        <a href="https://www.linkedin.com/in/zaraius-bilimoria" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+
+      </span>
+    </footer>
+  </main>
+</body>
+</html>
